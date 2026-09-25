@@ -1,0 +1,71 @@
+{
+  "hero": {
+    "mission": "TOBB ETÜ Bilgisayar Topluluğu; bilgisayar bilimine meraklı öğrencileri etkinlikler, atölyeler ve ortak projeler etrafında buluşturan öğrenci topluluğudur. Amacımız, üniversite hayatı boyunca teknik yetkinliğinizi ve çevrenizi birlikte büyütebileceğiniz bir ortam sunmak.",
+    "intro": "Bu siteyi kulüp tanıtım gününde standımızdaki QR kodu okutarak açtınız. Aşağıda topluluğumuzu, alt ekiplerimizi ve yönetim kadromuzu tanıyabilir; etkinlikler sayfasından yaklaşan buluşmalarımıza göz atabilirsiniz. Aramıza katılmak için sosyal medya hesaplarımızdan bize ulaşmanız yeterli."
+  },
+  "communities": [
+    {
+      "slug": "ana-topluluk",
+      "about": "Ana Topluluk, tüm alt ekiplerin çatısı ve koordinasyon merkezidir. Dönem boyunca teknik sohbetler, kariyer etkinlikleri, atölyeler ve sosyal buluşmalar düzenler; alt toplulukların projelerine ortam ve destek sağlar. Bilgisayar bilimine ilgi duyan herkesin ilk durağıdır."
+    },
+    {
+      "slug": "fintech",
+      "about": "FinTech Topluluğu, finans ve teknolojinin kesişiminde çalışmak isteyen öğrencileri bir araya getirir. Ödeme sistemleri, bankacılık teknolojileri ve veri odaklı finans ürünleri üzerine atölyeler, sektör buluşmaları ve uygulamalı projeler yürütür."
+    },
+    {
+      "slug": "app-gelistirme",
+      "about": "App Geliştirme Topluluğu, mobil ve web uygulaması geliştirmek isteyenlerin üretim alanıdır. Fikir aşamasından yayın sürecine kadar ürün geliştirmeyi pratik eder; ekip içi projeler ve kod incelemeleriyle deneyim paylaşımını destekler."
+    },
+    {
+      "slug": "ai",
+      "about": "AI Topluluğu, yapay zekâ ve makine öğrenmesine ilgi duyan öğrenciler için kuruldu. Okuma grupları, uygulamalı atölyeler ve araştırmadan uygulamaya uzanan projelerle üyelerin bu alanda derinleşmesini hedefler."
+    },
+    {
+      "slug": "oyun-gelistirme",
+      "about": "Oyun Geliştirme Topluluğu, oyun tasarımı ve geliştirmeyle ilgilenenleri buluşturur. Game jam'ler, prototip çalışmaları ve ortak oyun projeleriyle üyeler hem teknik hem de yaratıcı yönlerini geliştirir."
+    }
+  ],
+  "team": [
+    {
+      "communitySlug": "ana-topluluk",
+      "members": [
+        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+      ]
+    },
+    {
+      "communitySlug": "fintech",
+      "members": [
+        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+      ]
+    },
+    {
+      "communitySlug": "app-gelistirme",
+      "members": [
+        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+      ]
+    },
+    {
+      "communitySlug": "ai",
+      "members": [
+        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+      ]
+    },
+    {
+      "communitySlug": "oyun-gelistirme",
+      "members": [
+        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+      ]
+    }
+  ],
+  "socials": {
+    "instagram": "",
+    "linkedin": "",
+    "github": "",
+    "discord": ""
+  }
+}

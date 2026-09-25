@@ -1,0 +1,86 @@
+{
+  "$schema": "NASIL ETKİNLİK EKLENİR? → Aşağıdaki 'items' dizisinin başına (en üste) yeni bir kayıt ekleyin. Zorunlu alanlar: id (benzersiz, tireli), title, date (YYYY-MM-DD formatında!), location, communitySlug, summary. communitySlug şunlardan biri olmalı: ana-topluluk | fintech | app-gelistirme | ai | oyun-gelistirme. Opsiyonel: image (fotoğrafı public/etkinlikler/ klasörüne koyup \"/etkinlikler/dosya-adi.jpg\" yazın; boş bırakırsanız topluluk logolu placeholder gösterilir), tags (etiket listesi). Tarihler otomatik yeniden-eskiye sıralanır, diziye hangi sırada eklendiğiniz önemli değil. Ayrıntılı şema: src/data/events.types.ts",
+  "items": [
+    {
+      "id": "etu-game-jam-2026",
+      "title": "ETÜ Game Jam 2026",
+      "date": "2026-02-06",
+      "location": "TOBB ETÜ Teknoloji Merkezi",
+      "communitySlug": "oyun-gelistirme",
+      "summary": "48 saatlik oyun geliştirme maratonu; takımlar tema açıklandıktan sonra sıfırdan oyun prototipi çıkarıyor. Jüri değerlendirmesi ve ödül töreni pazar akşamı.",
+      "tags": ["game jam", "takım"]
+    },
+    {
+      "id": "etu-hack-2026",
+      "title": "ETÜ Hack 2026",
+      "date": "2026-01-17",
+      "location": "TOBB ETÜ Amfi 1 ve Çalışma Salonları",
+      "communitySlug": "ana-topluluk",
+      "summary": "Tüm alt toplulukların ortak hackathon'u; 24 saatte fikirden çalışan demoya. Mentor desteği, gece yemeği ve sürpriz ödüller var.",
+      "tags": ["hackathon", "yarışma"]
+    },
+    {
+      "id": "ctf-bayragi-yakala-2025",
+      "title": "CTF: Bayrağı Yakala",
+      "date": "2025-12-19",
+      "location": "Çevrim içi (Discord)",
+      "communitySlug": "ana-topluluk",
+      "summary": "Yeni başlayanlara uygun Capture The Flag yarışması; web, kripto ve tersine mühendislik kategorilerinde görevler.",
+      "tags": ["ctf", "siber güvenlik"]
+    },
+    {
+      "id": "kripto-odeme-paneli-2025",
+      "title": "Kripto Varlıklar ve Dijital Ödemeler Paneli",
+      "date": "2025-12-05",
+      "location": "İktisadi İdari Bilimler Binası Konferans Salonu",
+      "communitySlug": "fintech",
+      "summary": "Sektörden konuşmacılarla blokzincir tabanlı ödeme sistemleri, regülasyon ve Türkiye'de fintech kariyeri üzerine panel ve soru-cevap.",
+      "tags": ["panel", "kripto"]
+    },
+    {
+      "id": "ml-okuma-grubu-dikkat-2025",
+      "title": "ML Okuma Grubu: Dikkat Mekanizmaları",
+      "date": "2025-11-27",
+      "location": "Mühendislik Binası B-08",
+      "communitySlug": "ai",
+      "summary": "\"Attention Is All You Need\" makalesinin birlikte okunması ve transformer mimarisinin tahtada adım adım çıkarılması.",
+      "tags": ["okuma grubu", "makale"]
+    },
+    {
+      "id": "flutter-atolyesi-2025",
+      "title": "Flutter ile Mobil Geliştirme Atölyesi",
+      "date": "2025-11-21",
+      "location": "Mühendislik Binası Lab 3",
+      "communitySlug": "app-gelistirme",
+      "summary": "Uygulamalı atölye: sıfırdan kurulum, widget mantığı ve gün sonunda telefonda çalışan basit bir not uygulaması. Bilgisayar getirmeniz yeterli.",
+      "tags": ["atölye", "mobil"]
+    },
+    {
+      "id": "llm-atolyesi-2025",
+      "title": "AI Atölyesi: LLM'lere Giriş",
+      "date": "2025-11-14",
+      "location": "Mühendislik Binası B-12",
+      "communitySlug": "ai",
+      "summary": "Büyük dil modellerinin çalışma prensipleri ve uygulamalı prompt mühendisliği; mini proje olarak kendi sohbet botunuzu kuruyoruz.",
+      "tags": ["atölye", "yapay zekâ"]
+    },
+    {
+      "id": "ieee-day-teknik-sunumlar-2025",
+      "title": "IEEE Day: Teknik Sunumlar ve Kariyer Sohbetleri",
+      "date": "2025-10-07",
+      "location": "TOBB ETÜ Amfi 2",
+      "communitySlug": "ana-topluluk",
+      "summary": "IEEE Day kutlaması kapsamında mezunlarımızdan teknik sunumlar; ardından fuaye alanında networking ve staj sohbetleri.",
+      "tags": ["ieee day", "networking"]
+    },
+    {
+      "id": "tanitim-gunu-2025",
+      "title": "Topluluk Tanıtım Günü",
+      "date": "2025-10-02",
+      "location": "TOBB ETÜ Amfi 2",
+      "communitySlug": "ana-topluluk",
+      "summary": "Yeni dönem tanışma etkinliği; beş alt topluluğun tanıtımı, dönem planı ve kayıt masaları.",
+      "tags": ["tanıtım", "networking"]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+
+# Test çıktıları
+test-results
+playwright-report
+blob-report
+playwright/.cache
+
+# Ortam değişkenleri git'e girmesin (şablon hariç)
+.env
+.env.*
+!.env.example

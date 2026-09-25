@@ -1,0 +1,26 @@
+# Bağımlılıklar ve build çıktısı (konteyner içinde yeniden üretilir)
+node_modules
+dist
+dist-ssr
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# VCS ve editör artıkları
+.git
+.gitignore
+.DS_Store
+
+# Ortam dosyaları — imaja asla girmemeli
+.env
+.env.*
+!.env.example
+
+# Docker dosyalarının kendisi build context'e gerekmez
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Dokümantasyon
+DEPLOYMENT.md
+README.md
