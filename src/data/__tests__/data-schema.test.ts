@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { describe, it, expect } from 'vitest';
 import { communities } from '../communities';
 import type { EventsFile } from '../events.types';
@@ -58,10 +59,49 @@ describe('events.json şeması', () => {
       if (e.image !== undefined) {
         expect(e.image.startsWith('/etkinlikler/'), `${e.id}.image yolu`).toBe(true);
       }
+      for (const img of e.gallery ?? []) {
+        expect(img.startsWith('/etkinlikler/'), `${e.id}.gallery yolu`).toBe(true);
+      }
+      for (const slug of e.relatedSlugs ?? []) {
+        expect(validSlugs.has(slug), `${e.id} → geçersiz relatedSlug: ${slug}`).toBe(true);
+      }
+      for (const l of e.links ?? []) {
+        expect(l.url, `${e.id} link URL değil`).toMatch(/^https?:\/\//);
+      }
       if (e.tags !== undefined) {
         expect(Array.isArray(e.tags), `${e.id}.tags dizi`).toBe(true);
         for (const tag of e.tags) expect(tag.trim().length).toBeGreaterThan(0);
       }
+    }
+  });
+});
+
+// public/etkinlikler içeriği (yalnızca dosya adları gerekli; içerik yüklenmez)
+const publicEventFiles = new Set(
+  Object.keys(import.meta.glob('../../../public/etkinlikler/*')).map((p) =>
+    p.replace('../../../public', ''),
+  ),
+);
+
+it('events.json’daki görseller public/etkinlikler altında mevcuttur', () => {
+  expect(publicEventFiles.size).toBeGreaterThan(0);
+  for (const e of events) {
+    for (const img of [e.image, ...(e.gallery ?? [])].filter(Boolean) as string[]) {
+      expect(publicEventFiles.has(img), `${e.id} → ${img} yok`).toBe(true);
+    }
+  }
+});
+
+describe('public/logolar', () => {
+  const logoFiles = Object.keys(import.meta.glob('../../../public/logolar/*.{png,svg}')).map(
+    (p) => p.split('/').pop()!,
+  );
+
+  it('logo dosya adları communities.ts slug’larıyla birebir eşleşir', () => {
+    expect(logoFiles.length).toBeGreaterThan(0);
+    for (const file of logoFiles) {
+      const slug = file.replace(/\.(png|svg)$/, '');
+      expect(validSlugs.has(slug), `${file} → bilinmeyen slug`).toBe(true);
     }
   });
 });

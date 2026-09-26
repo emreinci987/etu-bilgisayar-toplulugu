@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 
 /**
- * /logolar/<slug>.svg (veya .png) varsa gösterir; yoksa slug monogramlı
+ * /logolar/<slug>.png (veya .svg) varsa gösterir; yoksa slug monogramlı
  * zarif bir placeholder çizer. Logo dosyası henüz eklenmemişse site bozulmaz.
+ * Kulüp logoları beyaz zemin için tasarlandığından (lacivert yazılar, saydam
+ * PNG'ler) her iki temada da beyaz bir karo üzerinde gösterilir.
  */
 interface Props {
   slug: string;
@@ -15,7 +17,7 @@ interface Props {
 }
 
 export default function CommunityLogo({ slug, shortName, color, size = 64, className = '' }: Props) {
-  const candidates = [`/logolar/${slug}.svg`, `/logolar/${slug}.png`];
+  const candidates = [`/logolar/${slug}.png`, `/logolar/${slug}.svg`];
   const [srcIndex, setSrcIndex] = useState(0);
   const [failed, setFailed] = useState(false);
 
@@ -47,7 +49,7 @@ export default function CommunityLogo({ slug, shortName, color, size = 64, class
       alt=""
       width={size}
       height={size}
-      className={`rounded-card ${className}`}
+      className={`shrink-0 rounded-card border border-coal-600 bg-white object-contain ${className}`}
       onError={() => {
         if (srcIndex < candidates.length - 1) setSrcIndex(srcIndex + 1);
         else setFailed(true);
