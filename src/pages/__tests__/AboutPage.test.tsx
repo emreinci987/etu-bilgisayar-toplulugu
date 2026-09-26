@@ -33,9 +33,16 @@ describe('AboutPage (integration)', () => {
 
   it('ismi boş olan üyelerde "Yakında" fallback’i görünür', () => {
     render(<AboutPage />);
-    // about.json'da tüm isimler boş → her boş isim için bir "Yakında"
+    // about.json'da ismi boş olan her üye için bir "Yakında" render edilir
     expect(screen.getAllByText('Yakında')).toHaveLength(emptyNameCount);
-    expect(emptyNameCount).toBe(teamMemberCount);
+    // dolu isimler de doğrudan görünür
+    const filledNames = about.team.flatMap((t) =>
+      t.members.filter((m) => m.name.trim().length > 0).map((m) => m.name.trim()),
+    );
+    for (const name of filledNames) {
+      expect(screen.getByText(name)).toBeInTheDocument();
+    }
+    expect(emptyNameCount + filledNames.length).toBe(teamMemberCount);
   });
 
   it('dolu sosyal linkler doğru href ile görünür', () => {

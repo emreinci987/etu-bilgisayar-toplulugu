@@ -44,35 +44,35 @@
     {
       "communitySlug": "ana-topluluk",
       "members": [
-        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan", "name": "Emre İnci", "title": "" },
         { "role": "Başkan Yardımcısı", "name": "", "title": "" }
       ]
     },
     {
       "communitySlug": "fintech",
       "members": [
-        { "role": "Başkan", "name": "", "title": "" },
-        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+        { "role": "Başkan", "name": "Ural Şenyılmaz", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "Göktürk Orkun Kesemen", "title": "" }
       ]
     },
     {
       "communitySlug": "app-gelistirme",
       "members": [
-        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan", "name": "Nehir Tıraş", "title": "" },
         { "role": "Başkan Yardımcısı", "name": "", "title": "" }
       ]
     },
     {
       "communitySlug": "ai",
       "members": [
-        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan", "name": "Elif Beyza Turan", "title": "" },
         { "role": "Başkan Yardımcısı", "name": "", "title": "" }
       ]
     },
     {
       "communitySlug": "oyun-gelistirme",
       "members": [
-        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan", "name": "Nuh Yusuf Sabırer", "title": "" },
         { "role": "Başkan Yardımcısı", "name": "", "title": "" }
       ]
     },
@@ -86,8 +86,8 @@
     {
       "communitySlug": "siber-guvenlik",
       "members": [
-        { "role": "Başkan", "name": "", "title": "" },
-        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+        { "role": "Başkan", "name": "Murat Yılmaz", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "Bekir Ata Yıldırım", "title": "" }
       ]
     }
   ],
