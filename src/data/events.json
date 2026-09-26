@@ -1,86 +1,311 @@
 {
-  "$schema": "NASIL ETKİNLİK EKLENİR? → Aşağıdaki 'items' dizisinin başına (en üste) yeni bir kayıt ekleyin. Zorunlu alanlar: id (benzersiz, tireli), title, date (YYYY-MM-DD formatında!), location, communitySlug, summary. communitySlug şunlardan biri olmalı: ana-topluluk | fintech | app-gelistirme | ai | oyun-gelistirme. Opsiyonel: image (fotoğrafı public/etkinlikler/ klasörüne koyup \"/etkinlikler/dosya-adi.jpg\" yazın; boş bırakırsanız topluluk logolu placeholder gösterilir), tags (etiket listesi). Tarihler otomatik yeniden-eskiye sıralanır, diziye hangi sırada eklendiğiniz önemli değil. Ayrıntılı şema: src/data/events.types.ts",
+  "$schema": "NASIL ETKİNLİK EKLENİR? → Aşağıdaki 'items' dizisine yeni bir kayıt ekleyin. Zorunlu alanlar: id (benzersiz, tireli), title, date (YYYY-MM-DD formatında!), location, communitySlug (düzenleyen topluluk), summary (kartta görünen kısa özet). communitySlug şunlardan biri olmalı: ana-topluluk | fintech | app-gelistirme | ai | oyun-gelistirme | blockchain | siber-guvenlik. Opsiyonel: relatedSlugs (konu gereği ilişkili diğer topluluklar, ör. yapay zekâ konulu etkinlik için [\"ai\"] — filtrede o topluluk altında da görünür), time (\"13:00\" veya \"13:00–17:00\"), description (detay penceresindeki uzun açıklama; paragrafları boş satırla ayırın), image (kapak; fotoğrafı public/etkinlikler/ klasörüne koyup \"/etkinlikler/dosya-adi.jpg\" yazın), gallery (detayda gösterilecek ek görseller), speakers ([{name, title, topic}]), links ([{label, url}]), tags. Tarihler otomatik yeniden-eskiye sıralanır. Ayrıntılı şema: src/data/events.types.ts",
   "items": [
     {
-      "id": "etu-game-jam-2026",
-      "title": "ETÜ Game Jam 2026",
-      "date": "2026-02-06",
-      "location": "TOBB ETÜ Teknoloji Merkezi",
-      "communitySlug": "oyun-gelistirme",
-      "summary": "48 saatlik oyun geliştirme maratonu; takımlar tema açıklandıktan sonra sıfırdan oyun prototipi çıkarıyor. Jüri değerlendirmesi ve ödül töreni pazar akşamı.",
-      "tags": ["game jam", "takım"]
-    },
-    {
-      "id": "etu-hack-2026",
-      "title": "ETÜ Hack 2026",
-      "date": "2026-01-17",
-      "location": "TOBB ETÜ Amfi 1 ve Çalışma Salonları",
+      "id": "yapay-zeka-guvenligi-2026",
+      "title": "Yapay Zeka Güvenliği",
+      "date": "2026-08-04",
+      "time": "18:30",
+      "location": "TOBB ETÜ Mavi Amfi",
       "communitySlug": "ana-topluluk",
-      "summary": "Tüm alt toplulukların ortak hackathon'u; 24 saatte fikirden çalışan demoya. Mentor desteği, gece yemeği ve sürpriz ödüller var.",
-      "tags": ["hackathon", "yarışma"]
+      "relatedSlugs": [
+        "ai"
+      ],
+      "summary": "AI Safety Türkiye ve SAIN iş birliğiyle iki oturumlu etkinlik: yapay zekânın kısa tarihinden güvenlik risklerine ve güncel makale sunumlarına.",
+      "description": "TOBB ETÜ Bilgisayar Topluluğu, AI Safety Türkiye ve SAIN iş birliğiyle \"Yapay Zeka Güvenliği\" başlıklı etkinliği düzenledik. Etkinlik dışarıdan katılımcılara da açıktı.\n\n1. oturumda Prof. Dr. Murat Özbayoğlu \"Yapay Zekânın Kısa Tarihi\" başlıklı açılış konuşmasını yaptı. 2. oturumda Berke Çelik yapay zekâ güvenliğine giriş yaparak riskleri ve fırsatları anlattı; Maya Özbayoğlu ise yapay zekâ güvenliği üzerine bir makale sunumu gerçekleştirdi.\n\nEtkinlik boyunca konuştuğumuz konuların detaylarına ve bahsettiğimiz makalelere aşağıdaki bağlantıdan ulaşabilirsiniz. Katılım gösteren herkese teşekkür ederiz!",
+      "image": "/etkinlikler/aisafety-oturum1.webp",
+      "gallery": [
+        "/etkinlikler/aisafety-oturum2.webp",
+        "/etkinlikler/aisafety-recap-1.webp",
+        "/etkinlikler/aisafety-recap-2.webp",
+        "/etkinlikler/aisafety-recap-3.webp"
+      ],
+      "speakers": [
+        {
+          "name": "Prof. Dr. Murat Özbayoğlu",
+          "title": "TOBB ETÜ Yapay Zeka Mühendisliği Bölüm Başkanı",
+          "topic": "Açılış konuşması: Yapay Zekânın Kısa Tarihi"
+        },
+        {
+          "name": "Berke Çelik",
+          "title": "AI Safety Türkiye",
+          "topic": "Yapay Zekâ Güvenliğine Giriş: Riskler ve Fırsatlar"
+        },
+        {
+          "name": "Maya Özbayoğlu",
+          "title": "Safe AI Netherlands",
+          "topic": "Yapay Zekâ Güvenliği: Paper Sunumu"
+        }
+      ],
+      "links": [
+        {
+          "label": "Konular ve makaleler",
+          "url": "https://linktr.ee/aisafetylinkler"
+        },
+        {
+          "label": "Instagram duyurusu",
+          "url": "https://www.instagram.com/p/DbbrOuos3Yz/"
+        }
+      ],
+      "tags": [
+        "yapay zekâ",
+        "ai safety",
+        "konuşma"
+      ]
     },
     {
-      "id": "ctf-bayragi-yakala-2025",
-      "title": "CTF: Bayrağı Yakala",
-      "date": "2025-12-19",
-      "location": "Çevrim içi (Discord)",
+      "id": "verimlilik-ve-teknoloji-fuari-2026",
+      "title": "8. Verimlilik ve Teknoloji Fuarı",
+      "date": "2026-04-20",
+      "location": "8. Verimlilik ve Teknoloji Fuarı",
+      "communitySlug": "siber-guvenlik",
+      "summary": "8. Verimlilik ve Teknoloji Fuarı'nda stant açarak siber güvenlik ekosistemini, yeni teknolojileri ve projelerimizi ziyaretçilere anlattık.",
+      "description": "TOBB ETÜ Siber Güvenlik Topluluğu olarak 8. Verimlilik ve Teknoloji Fuarı'ndaydık!\n\nFuar boyunca siber güvenlik ekosistemini büyütmek, yeni teknolojileri konuşmak ve projelerimizi anlatmak için standımızda yerimizi aldık. Teknolojiye yön verenlerle bir araya gelmek ve siber güvenlik farkındalığını artırmak bizim için harika bir deneyimdi.\n\nBizi ziyaret eden, enerjimize ortak olan herkese teşekkürler!",
+      "image": "/etkinlikler/verimlilik-fuari-3.jpg",
+      "gallery": [
+        "/etkinlikler/verimlilik-fuari-1.jpg",
+        "/etkinlikler/verimlilik-fuari-2.jpg"
+      ],
+      "links": [
+        {
+          "label": "Instagram gönderisi",
+          "url": "https://www.instagram.com/p/DXXSJ9EjDIK/"
+        }
+      ],
+      "tags": [
+        "fuar",
+        "stant",
+        "siber güvenlik"
+      ]
+    },
+    {
+      "id": "yapay-zeka-caginda-basari-2026",
+      "title": "Yapay Zeka Çağında Başarı",
+      "date": "2026-06-07",
+      "time": "20:00–21:00",
+      "location": "Çevrim içi",
       "communitySlug": "ana-topluluk",
-      "summary": "Yeni başlayanlara uygun Capture The Flag yarışması; web, kripto ve tersine mühendislik kategorilerinde görevler.",
-      "tags": ["ctf", "siber güvenlik"]
+      "relatedSlugs": [
+        "ai"
+      ],
+      "summary": "HP'de yapay zekâ mühendisi ve Solarity AI kurucusu Ata Turhan ile kariyer, başarı, yapay zekâ ve girişimcilik üzerine konuşma ve soru-cevap.",
+      "description": "Solarity AI ile birlikte düzenlediğimiz bu etkinlikte, Türkiye'nin ilk Yapay Zeka Mühendisliği mezunlarından olan, şu anda ABD'de HP'de Yapay Zeka Mühendisi olarak çalışan ve Solarity AI'ın kurucusu ve CEO'su olan Ata Turhan ile buluştuk.\n\nKonuşmada şu sorular ele alındı: Yapay zekâ çağında başarının bir numaralı şartı nedir? ABD'de eğitim ve çalışma süreci nasıl işliyor? Girişimcilik nasıl en doğru şekilde yapılır? Yapay zekâyı en doğru şekilde kullanmanın yolu nedir?\n\nEtkinlik interaktif bir soru-cevap oturumuyla tamamlandı.",
+      "image": "/etkinlikler/solarity-ata-turhan.jpg",
+      "speakers": [
+        {
+          "name": "Ata Turhan",
+          "title": "HP Yapay Zeka Mühendisi · Solarity AI Kurucusu ve CEO'su"
+        }
+      ],
+      "links": [
+        {
+          "label": "Instagram duyurusu",
+          "url": "https://www.instagram.com/p/DZK-yW6qevA/"
+        }
+      ],
+      "tags": [
+        "yapay zekâ",
+        "kariyer",
+        "söyleşi"
+      ]
     },
     {
-      "id": "kripto-odeme-paneli-2025",
-      "title": "Kripto Varlıklar ve Dijital Ödemeler Paneli",
-      "date": "2025-12-05",
-      "location": "İktisadi İdari Bilimler Binası Konferans Salonu",
-      "communitySlug": "fintech",
-      "summary": "Sektörden konuşmacılarla blokzincir tabanlı ödeme sistemleri, regülasyon ve Türkiye'de fintech kariyeri üzerine panel ve soru-cevap.",
-      "tags": ["panel", "kripto"]
+      "id": "basari-yapay-zeka-biohacking-2026",
+      "title": "Başarı, Yapay Zeka ve Biohacking",
+      "date": "2026-02-07",
+      "time": "21:00–22:00",
+      "location": "Çevrim içi (Google Meet)",
+      "communitySlug": "ana-topluluk",
+      "relatedSlugs": [
+        "ai"
+      ],
+      "summary": "Topluluğumuzun kurucusu ve ilk başkanı Ata Turhan ile başarı, yapay zekâ ve biohacking üzerine çevrim içi konuşma.",
+      "description": "Topluluğumuzun kurucusu ve ilk başkanı, aynı zamanda Solarity AI'ın kurucusu ve CEO'su olan Ata Turhan ile \"Başarı, Yapay Zeka ve Biohacking\" üzerine bir konuşma düzenledik.\n\nAkış: 0–10 dk hayat başarısı, 10–20 dk yapay zekâ, 20–30 dk biohacking, 30–60 dk soru-cevap.",
+      "image": "/etkinlikler/ata-turhan-biohacking.webp",
+      "speakers": [
+        {
+          "name": "Ata Turhan",
+          "title": "Solarity AI CEO'su · HP AI Engineer · TOBB ETÜ Valedictorian '23"
+        }
+      ],
+      "links": [
+        {
+          "label": "Instagram duyurusu",
+          "url": "https://www.instagram.com/p/DUOaid1DAoX/"
+        }
+      ],
+      "tags": [
+        "yapay zekâ",
+        "söyleşi"
+      ]
     },
     {
-      "id": "ml-okuma-grubu-dikkat-2025",
-      "title": "ML Okuma Grubu: Dikkat Mekanizmaları",
-      "date": "2025-11-27",
-      "location": "Mühendislik Binası B-08",
-      "communitySlug": "ai",
-      "summary": "\"Attention Is All You Need\" makalesinin birlikte okunması ve transformer mimarisinin tahtada adım adım çıkarılması.",
-      "tags": ["okuma grubu", "makale"]
+      "id": "cyber-talks-2026",
+      "title": "Cyber Talks",
+      "date": "2026-02-14",
+      "time": "15:00–17:20",
+      "location": "TOBB ETÜ Mavi Amfi",
+      "communitySlug": "siber-guvenlik",
+      "summary": "Siber güvenlik alanından üç uzmanı ağırladığımız, kırkar dakikalık üç oturumdan oluşan kariyer ve sektör buluşması.",
+      "description": "TOBB ETÜ Siber Güvenlik Topluluğu olarak, siber güvenlik alanından uzmanları ağırladığımız Cyber Talks etkinliğini düzenledik. Etkinlik, bu alanda kariyer yapmayı düşünen, merak eden ve siber güvenliği sektörün içindekilerden dinlemek isteyen herkese açıktı.\n\nProgram kırkar dakikalık üç oturumdan oluştu; oturum aralarında kahve eşliğinde konuşmacılarla sohbet etme fırsatı yakalandı.\n\nKatılım sağlayan herkese teşekkür ederiz! Diğer etkinliklerde görüşmek üzere.",
+      "image": "/etkinlikler/cyber-talks-duyuru.webp",
+      "gallery": [
+        "/etkinlikler/cyber-talks-program.jpg",
+        "/etkinlikler/cyber-talks-1.jpg",
+        "/etkinlikler/cyber-talks-2.jpg",
+        "/etkinlikler/cyber-talks-3.jpg",
+        "/etkinlikler/cyber-talks-4.jpg",
+        "/etkinlikler/cyber-talks-5.jpg"
+      ],
+      "speakers": [
+        {
+          "name": "Berk Cem Göksel",
+          "title": "Kernel Security Researcher",
+          "topic": "15:00–15:40 · Dünyayla Nasıl Yarışırım? — Sıfırdan başlayanlar için yol haritası; siber güvenlikte hangi alanlar bana göre?"
+        },
+        {
+          "name": "Şahinde Ceren Omrak",
+          "title": "Siber Güvenlik Uzmanı (Hepsiburada/Hepsipay)",
+          "topic": "15:50–16:30 · Siber Güvenliğin Geleceği — Siber güvenliğin geleceği nasıl olacak; bulut sistemlerinin sunduğu fırsatlar ve riskler"
+        },
+        {
+          "name": "Burkay Hasbay",
+          "title": "Cyber Security Engineer (HAVELSAN)",
+          "topic": "16:40–17:20 · Siber Güvenlikte Risk Analizlerinin Önemi — Risk ve uyumluluk alanında kariyer fırsatları; risk analizi sonuçları nasıl değerlendirilmeli?"
+        }
+      ],
+      "links": [
+        {
+          "label": "Instagram (etkinlikten kareler)",
+          "url": "https://www.instagram.com/p/DUyKxpCjBoY/"
+        },
+        {
+          "label": "Program akışı",
+          "url": "https://www.instagram.com/p/DUlwYwNjClv/"
+        }
+      ],
+      "tags": [
+        "siber güvenlik",
+        "kariyer",
+        "söyleşi"
+      ]
     },
     {
-      "id": "flutter-atolyesi-2025",
-      "title": "Flutter ile Mobil Geliştirme Atölyesi",
-      "date": "2025-11-21",
-      "location": "Mühendislik Binası Lab 3",
+      "id": "emea-netacad-cup-2026",
+      "title": "EMEA NetAcad Cup",
+      "date": "2026-01-10",
+      "location": "Cisco Networking Academy · EMEA",
+      "communitySlug": "siber-guvenlik",
+      "summary": "Cisco Networking Academy ve Real Madrid CF iş birliğiyle düzenlenen uluslararası siber güvenlik yarışması EMEA NetAcad Cup'a katılım sağladık.",
+      "description": "TOBB ETÜ Siber Güvenlik Topluluğu olarak, Cisco Networking Academy ve Real Madrid CF iş birliğiyle düzenlenen EMEA NetAcad Cup'a katılım sağladık.\n\nFinal aşamasında dereceye giren kadrolara Madrid'de VIP La Liga maç biletleri ve Santiago Bernabéu Stadyumu'nun teknolojik altyapısını yerinde inceleme fırsatı tanınıyor.",
+      "image": "/etkinlikler/netacad-cup.jpg",
+      "links": [
+        {
+          "label": "Instagram duyurusu",
+          "url": "https://www.instagram.com/p/DTUxS8sjKH4/"
+        }
+      ],
+      "tags": [
+        "yarışma",
+        "siber güvenlik"
+      ]
+    },
+    {
+      "id": "ortam25-2025",
+      "title": "Ortam25 Standı",
+      "date": "2025-10-05",
+      "location": "TOBB ETÜ",
+      "communitySlug": "ana-topluluk",
+      "relatedSlugs": [
+        "app-gelistirme"
+      ],
+      "summary": "Ortam25'te iki gün boyunca standımızda ziyaretçilerle buluştuk; zar attık, sohbet ettik, yeni üyelerle tanıştık.",
+      "description": "Ortam25'te dolu dolu iki gün geçirdik! Standımıza uğrayıp zar atan, sohbet eden ve bizimle vakit geçiren herkese teşekkür ederiz.\n\nDesteği için sponsorumuz Pin Drinks'e teşekkürler. Yeni etkinliklerde görüşmek üzere!",
+      "image": "/etkinlikler/ortam25.jpg",
+      "links": [
+        {
+          "label": "Instagram videosu",
+          "url": "https://www.instagram.com/reel/DPbTNxuDFPE/"
+        }
+      ],
+      "tags": [
+        "tanıtım",
+        "stant"
+      ]
+    },
+    {
+      "id": "docker-workshop-2025",
+      "title": "Docker Workshop",
+      "date": "2025-06-14",
+      "time": "13:00",
+      "location": "TM218",
       "communitySlug": "app-gelistirme",
-      "summary": "Uygulamalı atölye: sıfırdan kurulum, widget mantığı ve gün sonunda telefonda çalışan basit bir not uygulaması. Bilgisayar getirmeniz yeterli.",
-      "tags": ["atölye", "mobil"]
+      "summary": "HAVELSAN Siber Güvenlik Mühendisi Ata Seren ile uygulamalı Docker atölyesi.",
+      "description": "HAVELSAN'da Siber Güvenlik Mühendisi olarak çalışan Ata Seren'in anlatımıyla uygulamalı bir Docker atölyesi düzenledik.",
+      "image": "/etkinlikler/docker-workshop.jpg",
+      "speakers": [
+        {
+          "name": "Ata Seren",
+          "title": "Cyber Security Engineer, HAVELSAN"
+        }
+      ],
+      "tags": [
+        "atölye",
+        "docker"
+      ]
     },
     {
-      "id": "llm-atolyesi-2025",
-      "title": "AI Atölyesi: LLM'lere Giriş",
-      "date": "2025-11-14",
-      "location": "Mühendislik Binası B-12",
-      "communitySlug": "ai",
-      "summary": "Büyük dil modellerinin çalışma prensipleri ve uygulamalı prompt mühendisliği; mini proje olarak kendi sohbet botunuzu kuruyoruz.",
-      "tags": ["atölye", "yapay zekâ"]
+      "id": "savunma-sanayisinde-muhendis-olmak-2025",
+      "title": "Savunma Sanayisinde Mühendis Olmak",
+      "date": "2025-02-01",
+      "time": "13:00",
+      "location": "TOBB ETÜ Mavi Amfi",
+      "communitySlug": "app-gelistirme",
+      "relatedSlugs": [
+        "ana-topluluk"
+      ],
+      "summary": "ASELSAN, ROKETSAN ve HAVELSAN'dan mühendislerle savunma sanayisinde mühendislik kariyeri üzerine panel.",
+      "description": "TOBB ETÜ App Development Community ve TOBB ETÜ Bilgisayar Topluluğu olarak, savunma sanayisinin önde gelen üç şirketinden konuklarımızla \"Savunma Sanayisinde Mühendis Olmak\" panelini düzenledik.\n\nKonuklarımız sektördeki deneyimlerini, çalıştıkları alanları ve savunma sanayisinde mühendis olarak kariyer yolculuklarını paylaştı.",
+      "image": "/etkinlikler/savunma-sanayisinde-muhendis-olmak.jpg",
+      "speakers": [
+        {
+          "name": "Onur Aktuğ",
+          "title": "ASELSAN Yazılım Test Mühendisliği Bölüm Müdürü"
+        },
+        {
+          "name": "Özlem Demirtaş Altıntaş",
+          "title": "ROKETSAN Makina Öğrenmesi Mühendisi ve Takım Lideri"
+        },
+        {
+          "name": "Ensar Erdoğan",
+          "title": "HAVELSAN Altyapı ve Entegrasyon Takım Lideri"
+        }
+      ],
+      "tags": [
+        "panel",
+        "kariyer",
+        "savunma sanayi"
+      ]
     },
     {
-      "id": "ieee-day-teknik-sunumlar-2025",
-      "title": "IEEE Day: Teknik Sunumlar ve Kariyer Sohbetleri",
-      "date": "2025-10-07",
-      "location": "TOBB ETÜ Amfi 2",
-      "communitySlug": "ana-topluluk",
-      "summary": "IEEE Day kutlaması kapsamında mezunlarımızdan teknik sunumlar; ardından fuaye alanında networking ve staj sohbetleri.",
-      "tags": ["ieee day", "networking"]
-    },
-    {
-      "id": "tanitim-gunu-2025",
-      "title": "Topluluk Tanıtım Günü",
-      "date": "2025-10-02",
-      "location": "TOBB ETÜ Amfi 2",
-      "communitySlug": "ana-topluluk",
-      "summary": "Yeni dönem tanışma etkinliği; beş alt topluluğun tanıtımı, dönem planı ve kayıt masaları.",
-      "tags": ["tanıtım", "networking"]
+      "id": "javascript-baslangictan-ileri-2024",
+      "title": "JavaScript: Başlangıçtan İleri Seviyeye",
+      "date": "2024-11-03",
+      "time": "13:00–17:00",
+      "location": "TM 218",
+      "communitySlug": "app-gelistirme",
+      "summary": "Hüseyin Yürekli ile JavaScript'i temellerden ileri seviye konulara kadar ele aldığımız dört saatlik atölye.",
+      "description": "Hüseyin Yürekli'nin anlatımıyla JavaScript'i başlangıç seviyesinden ileri seviyeye kadar ele aldığımız dört saatlik bir atölye düzenledik.",
+      "image": "/etkinlikler/javascript-baslangictan-ileri.jpg",
+      "speakers": [
+        {
+          "name": "Hüseyin Yürekli"
+        }
+      ],
+      "tags": [
+        "atölye",
+        "javascript"
+      ]
     }
   ]
 }

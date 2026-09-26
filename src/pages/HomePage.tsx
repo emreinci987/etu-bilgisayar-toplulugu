@@ -92,7 +92,12 @@ export default function HomePage() {
                     {e.date}
                   </time>
                   <div>
-                    <p className="font-medium text-cream">{e.title}</p>
+                    <Link
+                      to={`/etkinlikler?etkinlik=${encodeURIComponent(e.id)}`}
+                      className="font-medium text-cream hover:text-amber"
+                    >
+                      {e.title}
+                    </Link>
                     <p className="text-sm text-cream-faint">
                       {e.location} · {e.summary}
                     </p>

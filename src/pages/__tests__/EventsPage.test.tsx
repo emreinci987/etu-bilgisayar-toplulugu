@@ -1,13 +1,19 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import EventsPage from '../EventsPage';
 import type { EventsFile } from '../../data/events.types';
+import { getEventCommunitySlugs } from '../../data/events.types';
 import rawEvents from '../../data/events.json';
 
 const allEvents = (rawEvents as EventsFile).items;
-const AI_COUNT = allEvents.filter((e) => e.communitySlug === 'ai').length;
+const countFor = (slug: string) =>
+  allEvents.filter((e) => getEventCommunitySlugs(e).includes(slug)).length;
+const AI_COUNT = countFor('ai');
+// AI filtresinde görünmemesi gereken bir etkinlik
+const NON_AI_EVENT = allEvents.find((e) => !getEventCommunitySlugs(e).includes('ai'))!;
+const DETAIL_EVENT = allEvents.find((e) => (e.speakers?.length ?? 0) > 0 && e.gallery?.length)!;
 
 /** URL'deki arama parametresini teste görünür kılan prob */
 function LocationProbe() {
@@ -51,7 +57,7 @@ describe('EventsPage (integration)', () => {
     const cards = screen.getAllByRole('article');
     expect(cards).toHaveLength(AI_COUNT);
     expect(screen.getByTestId('location')).toHaveTextContent('/etkinlikler?topluluk=ai');
-    expect(screen.queryByRole('heading', { name: 'ETÜ Hack 2026' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: NON_AI_EVENT.title })).not.toBeInTheDocument();
   });
 
   it("'Tümü' çipi filtreyi kaldırır ve URL'i temizler", async () => {
@@ -73,8 +79,70 @@ describe('EventsPage (integration)', () => {
   });
 
   it('paylaşılabilir filtre linki doğrudan açılınca filtreli gelir', () => {
-    renderEventsPage('/etkinlikler?topluluk=fintech');
-    const expected = allEvents.filter((e) => e.communitySlug === 'fintech').length;
-    expect(screen.getAllByRole('article')).toHaveLength(expected);
+    renderEventsPage('/etkinlikler?topluluk=app-gelistirme');
+    expect(screen.getAllByRole('article')).toHaveLength(countFor('app-gelistirme'));
+  });
+
+  it('ilişkili topluluk (relatedSlugs) filtresinde de etkinlik listelenir', async () => {
+    const related = allEvents.find((e) => e.relatedSlugs?.includes('ai'))!;
+    const user = userEvent.setup();
+    renderEventsPage();
+    await user.click(screen.getByRole('button', { name: 'AI Topluluğu' }));
+    expect(screen.getByRole('heading', { name: related.title })).toBeInTheDocument();
+  });
+
+  it('etkinliği olmayan topluluk filtresinde boş durum mesajı görünür', () => {
+    const emptySlug = ['fintech', 'blockchain', 'oyun-gelistirme'].find((s) => countFor(s) === 0);
+    if (!emptySlug) return;
+    renderEventsPage(`/etkinlikler?topluluk=${emptySlug}`);
+    expect(screen.queryAllByRole('article')).toHaveLength(0);
+    expect(screen.getByText(/henüz etkinlik kaydı yok/)).toBeInTheDocument();
+  });
+});
+
+describe('EventsPage detay penceresi', () => {
+  it('karta tıklayınca detay açılır, URL güncellenir, Esc ile kapanır', async () => {
+    const user = userEvent.setup();
+    renderEventsPage();
+
+    await user.click(screen.getByRole('button', { name: DETAIL_EVENT.title }));
+
+    const dialog = screen.getByRole('dialog', { name: DETAIL_EVENT.title });
+    expect(dialog).toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent(`etkinlik=${DETAIL_EVENT.id}`);
+    for (const s of DETAIL_EVENT.speakers!) {
+      expect(within(dialog).getByText(s.name)).toBeInTheDocument();
+    }
+
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByTestId('location')).not.toHaveTextContent('etkinlik=');
+  });
+
+  it('?etkinlik=<id> linki detayı doğrudan açar; kapat butonu kapatır', async () => {
+    const user = userEvent.setup();
+    renderEventsPage(`/etkinlikler?etkinlik=${DETAIL_EVENT.id}`);
+
+    expect(screen.getByRole('dialog', { name: DETAIL_EVENT.title })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Kapat' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('birden fazla görselde ileri/geri butonları görseller arasında gezer', async () => {
+    const user = userEvent.setup();
+    renderEventsPage(`/etkinlikler?etkinlik=${DETAIL_EVENT.id}`);
+    const total = 1 + DETAIL_EVENT.gallery!.length;
+
+    expect(screen.getByText(`1 / ${total}`)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Sonraki görsel' }));
+    expect(screen.getByText(`2 / ${total}`)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Önceki görsel' }));
+    await user.click(screen.getByRole('button', { name: 'Önceki görsel' }));
+    expect(screen.getByText(`${total} / ${total}`)).toBeInTheDocument();
+  });
+
+  it('geçersiz ?etkinlik= değeri pencere açmaz', () => {
+    renderEventsPage('/etkinlikler?etkinlik=boyle-bir-etkinlik-yok');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });
