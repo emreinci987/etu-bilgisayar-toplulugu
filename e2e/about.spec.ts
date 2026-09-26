@@ -7,7 +7,6 @@ import type { AboutData } from '../src/data/about.types';
 const about = JSON.parse(
   readFileSync(fileURLToPath(new URL('../src/data/about.json', import.meta.url)), 'utf-8'),
 ) as AboutData;
-const teamMemberCount = about.team.reduce((sum, t) => sum + t.members.length, 0);
 const emptyNameCount = about.team.reduce(
   (sum, t) => sum + t.members.filter((m) => m.name.trim().length === 0).length,
   0,
@@ -24,10 +23,12 @@ test('biz-kimiz: topluluk bölümleri ve yönetim ekibi görünür', async ({ pa
   // her topluluk için bir "hakkında" kartı
   await expect(page.locator('article')).toHaveCount(communities.length);
 
-  // Yönetim ekibi bölümü: her topluluk için başkan + yardımcı, isimler boş → "Yakında"
+  // Yönetim ekibi bölümü: her topluluk için başkan + yardımcı; ismi boş olanlar → "Yakında"
   await expect(page.getByRole('heading', { name: 'Yönetim Ekibimiz' })).toBeVisible();
   await expect(page.getByText('Yakında', { exact: true })).toHaveCount(emptyNameCount);
-  expect(emptyNameCount).toBe(teamMemberCount);
+  for (const m of about.team.flatMap((t) => t.members).filter((m) => m.name.trim())) {
+    await expect(page.getByText(m.name, { exact: true }).first()).toBeVisible();
+  }
 });
 
 test('biz-kimiz: WhatsApp CTA butonu görünür ve doğru gruba işaret eder', async ({ page }) => {

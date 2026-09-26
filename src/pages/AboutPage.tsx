@@ -85,6 +85,7 @@ export default function AboutPage() {
                     slug={team.communitySlug}
                     color={community.color}
                     member={member}
+                    communityName={community.name}
                   />
                 ))}
               </div>
