@@ -18,7 +18,7 @@ function renderHome() {
 }
 
 describe('HomePage (integration, HeroCanvas mock’lu)', () => {
-  it('hero başlığı ve 5 topluluk kartı render olur', () => {
+  it(`hero başlığı ve ${communities.length} topluluk kartı render olur`, () => {
     renderHome();
     const h1 = screen.getByRole('heading', { level: 1 });
     expect(h1).toHaveTextContent('Bilgisayar');

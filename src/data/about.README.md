@@ -10,9 +10,10 @@ değiştirmeden içerik güncellemek için yalnızca bu dosyayı düzenleyin.
 | --- | --- |
 | `hero.mission` | Sayfa üstündeki misyon paragrafı (1-2 cümle). |
 | `hero.intro` | Tanıtım günü bağlamını anlatan paragraf. |
-| `communities[]` | Her topluluk için `slug` + `about` metni. `slug`, `communities.ts` dosyasındaki slug ile **birebir aynı** olmalı (`ana-topluluk`, `fintech`, `app-gelistirme`, `ai`, `oyun-gelistirme`). `about` metnini topluluk başkanı kendi ekibi için düzenler. |
+| `communities[]` | Her topluluk için `slug` + `about` metni. `slug`, `communities.ts` dosyasındaki slug ile **birebir aynı** olmalı (`ana-topluluk`, `fintech`, `app-gelistirme`, `ai`, `oyun-gelistirme`, `blockchain`, `siber-guvenlik`). `about` metnini topluluk başkanı kendi ekibi için düzenler. |
+| `communities[].instagram` | Topluluğun Instagram URL'i (isteğe bağlı). Doluysa kartın altında "Instagram'da Takip Et" butonu görünür; boş bırakılırsa buton gizlenir. Tam URL yazın. |
 | `team[]` | Her topluluk için başkan ve başkan yardımcısı. `name` boş bırakılırsa kartta "Yakında" yazar. `title` alanına bölüm/sınıf gibi kısa bir unvan yazılabilir (isteğe bağlı). |
-| `socials` | Instagram, LinkedIn, GitHub, Discord bağlantıları. Boş string bırakılan ikon sayfada **gösterilmez**. Tam URL yazın (ör. `https://instagram.com/...`). |
+| `socials` | Instagram, LinkedIn, GitHub, Discord ve WhatsApp bağlantıları. Boş string bırakılan ikon sayfada **gösterilmez**. Tam URL yazın (ör. `https://instagram.com/...`). `socials.whatsapp` doluysa ayrıca sayfa üstünde "WhatsApp Grubuna Katıl" CTA butonu görünür. |
 
 ## Fotoğraflar
 

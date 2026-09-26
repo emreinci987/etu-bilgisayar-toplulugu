@@ -24,7 +24,7 @@ export default function HomePage() {
             Topluluğu<span className="text-amber">_</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-cream-dim">
-            Kodu sevenlerin buluşma noktası. Beş alt topluluk, onlarca etkinlik,
+            Kodu sevenlerin buluşma noktası. {communities.length} alt topluluk, onlarca etkinlik,
             üretmek isteyen herkese açık bir kapı.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
@@ -48,7 +48,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
         <SectionHeading
           kicker="01 / topluluklar"
-          title="Beş topluluk, tek çatı"
+          title={`${communities.length} topluluk, tek çatı`}
           description="İlgi alanına göre birini seç ya da hepsine katıl. Her topluluk kendi etkinlik ve projelerini yürütür."
         />
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

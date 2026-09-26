@@ -13,7 +13,7 @@ const emptyNameCount = about.team.reduce(
 );
 
 describe('AboutPage (integration)', () => {
-  it('5 topluluk bölümü render olur', () => {
+  it(`${communities.length} topluluk bölümü render olur`, () => {
     render(<AboutPage />);
     expect(screen.getAllByRole('article')).toHaveLength(communities.length);
     for (const c of communities) {
@@ -38,9 +38,38 @@ describe('AboutPage (integration)', () => {
     expect(emptyNameCount).toBe(teamMemberCount);
   });
 
-  it('sosyal linkler boşsa bilgilendirme mesajı gösterilir', () => {
+  it('dolu sosyal linkler doğru href ile görünür', () => {
     render(<AboutPage />);
-    expect(screen.getByText(/sosyal medya bağlantıları yakında eklenecek/i)).toBeInTheDocument();
+    for (const [key, label] of [
+      ['instagram', 'Instagram'],
+      ['linkedin', 'LinkedIn'],
+      ['whatsapp', 'WhatsApp'],
+    ] as const) {
+      const url = about.socials[key].trim();
+      if (url.length > 0) {
+        expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', url);
+      }
+    }
+  });
+
+  it('WhatsApp CTA butonu socials.whatsapp’a işaret eder', () => {
+    render(<AboutPage />);
+    const cta = screen.getByRole('link', { name: /WhatsApp Grubuna Katıl/ });
+    expect(cta).toHaveAttribute('href', about.socials.whatsapp);
+    expect(cta).toHaveAttribute('target', '_blank');
+    expect(cta).toHaveAttribute('rel', expect.stringContaining('noopener'));
+  });
+
+  it('instagram URL’i olan her topluluk kartında takip butonu görünür', () => {
+    render(<AboutPage />);
+    const withInstagram = about.communities.filter(
+      (c) => (c.instagram ?? '').trim().length > 0,
+    );
+    const buttons = screen.getAllByRole('link', { name: /Instagram'da Takip Et/ });
+    expect(buttons).toHaveLength(withInstagram.length);
+    for (const c of withInstagram) {
+      expect(buttons.some((b) => b.getAttribute('href') === c.instagram)).toBe(true);
+    }
   });
 
   it('hero misyon metni görünür', () => {

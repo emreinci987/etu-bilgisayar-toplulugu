@@ -54,6 +54,16 @@ const ENTRIES: SocialEntry[] = [
     ),
   },
   {
+    key: 'whatsapp',
+    label: 'WhatsApp',
+    icon: (
+      <svg viewBox="0 0 24 24" width="20" height="20" {...stroke} aria-hidden="true">
+        <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" />
+        <path d="M9.2 8.4c-.3 0-.8.1-.8.7 0 1.4 1.2 3.3 2.6 4.4 1.3 1 2.4 1.3 3.1 1.3.6 0 1-.5 1-1v-.6l-1.8-.7-.8.8c-.9-.5-2.1-1.7-2.6-2.6l.8-.8-.7-1.8-.8.3Z" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
     key: 'discord',
     label: 'Discord',
     icon: (

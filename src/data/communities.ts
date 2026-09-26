@@ -1,5 +1,5 @@
 /**
- * Tek gerçek kaynak: 5 topluluk.
+ * Tek gerçek kaynak: topluluk listesi.
  * Yeni topluluk eklemek = buraya kayıt eklemek; sayfalar ve grid buradan beslenir.
  */
 export interface Community {
@@ -50,6 +50,20 @@ export const communities: Community[] = [
     shortName: 'OG',
     tagline: 'Oyun tasarımı ve geliştirme; game jam’ler, prototipler ve ortak oyun projeleri.',
     color: '#f2cc8f',
+  },
+  {
+    slug: 'blockchain',
+    name: 'Blockchain Topluluğu',
+    shortName: 'BC',
+    tagline: 'Blokzincir teknolojileri, akıllı kontratlar ve merkeziyetsiz uygulamalar üzerine çalışmalar.',
+    color: '#b48ead',
+  },
+  {
+    slug: 'siber-guvenlik',
+    name: 'Siber Güvenlik Topluluğu',
+    shortName: 'SG',
+    tagline: 'Siber güvenlik ve sızma testleri; CTF yarışmaları, atölyeler ve savunma pratikleri.',
+    color: '#7f9bb3',
   },
 ];
 

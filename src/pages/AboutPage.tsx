@@ -15,7 +15,8 @@ import type { AboutData } from '../data/about.types';
 const aboutData = rawAboutData as AboutData;
 
 export default function AboutPage() {
-  const aboutBySlug = new Map(aboutData.communities.map((c) => [c.slug, c.about]));
+  const aboutBySlug = new Map(aboutData.communities.map((c) => [c.slug, c]));
+  const whatsapp = aboutData.socials.whatsapp.trim();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
@@ -25,22 +26,40 @@ export default function AboutPage() {
         title="TOBB ETÜ Bilgisayar Topluluğu"
         description={aboutData.hero.mission}
       />
-      <p className="mb-16 max-w-2xl leading-relaxed text-cream-dim">{aboutData.hero.intro}</p>
+      <p className="mb-6 max-w-2xl leading-relaxed text-cream-dim">{aboutData.hero.intro}</p>
+      {whatsapp.length > 0 && (
+        <a
+          href={whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-16 inline-flex w-full items-center justify-center gap-2 rounded-card bg-amber px-5 py-3 font-mono text-sm font-medium text-coal transition-colors hover:bg-amber-soft sm:w-auto"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" />
+            <path d="M9.2 8.4c-.3 0-.8.1-.8.7 0 1.4 1.2 3.3 2.6 4.4 1.3 1 2.4 1.3 3.1 1.3.6 0 1-.5 1-1v-.6l-1.8-.7-.8.8c-.9-.5-2.1-1.7-2.6-2.6l.8-.8-.7-1.8-.8.3Z" fill="currentColor" stroke="none" />
+          </svg>
+          WhatsApp Grubuna Katıl
+        </a>
+      )}
 
       {/* 2. Topluluklar */}
       <SectionHeading
         kicker="topluluklar"
         title="Topluluklarımız"
-        description="Beş ekibimizin her biri kendi alanında etkinlikler ve projeler yürütür."
+        description="Her ekibimiz kendi alanında etkinlikler ve projeler yürütür."
       />
       <div className="mb-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {communities.map((community) => (
-          <CommunityAboutCard
-            key={community.slug}
-            community={community}
-            about={aboutBySlug.get(community.slug)}
-          />
-        ))}
+        {communities.map((community) => {
+          const record = aboutBySlug.get(community.slug);
+          return (
+            <CommunityAboutCard
+              key={community.slug}
+              community={community}
+              about={record?.about}
+              instagram={record?.instagram}
+            />
+          );
+        })}
       </div>
 
       {/* 3. Yönetim ekibi */}

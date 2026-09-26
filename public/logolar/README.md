@@ -1,6 +1,6 @@
 # Topluluk Logoları
 
-5 topluluk logosunu bu klasöre koyun. Dosya adı, `src/data/communities.ts` içindeki
+Topluluk logolarını bu klasöre koyun. Dosya adı, `src/data/communities.ts` içindeki
 `slug` ile birebir eşleşmelidir:
 
 | Dosya adı                 | Topluluk                  |
@@ -10,6 +10,8 @@
 | `app-gelistirme.svg`      | App Geliştirme Topluluğu  |
 | `ai.svg`                  | AI Topluluğu              |
 | `oyun-gelistirme.svg`     | Oyun Geliştirme Topluluğu |
+| `blockchain.svg`          | Blockchain Topluluğu      |
+| `siber-guvenlik.svg`      | Siber Güvenlik Topluluğu  |
 
 - Tercih sırası: önce `.svg`, bulunamazsa `.png` denenir.
 - Logo yoksa `CommunityLogo` bileşeni otomatik olarak monogramlı placeholder gösterir;

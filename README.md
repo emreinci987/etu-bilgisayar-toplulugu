@@ -19,7 +19,7 @@ Vite + React 18 + TypeScript + Tailwind CSS + react-router-dom v6 + three.js (va
 
 | Yol | Amaç |
 | --- | --- |
-| `src/data/communities.ts` | 5 topluluğun tek gerçek kaynağı (`Community` tipi) |
+| `src/data/communities.ts` | Toplulukların tek gerçek kaynağı (`Community` tipi) |
 | `src/data/events.json` | Etkinlik kayıtları — şema: `src/data/events.types.ts` (`Event`) |
 | `src/hooks/index.ts` | `useEvents()`, `useLatestEvents(n)`, `usePrefersReducedMotion()` |
 | `public/logolar/<slug>.svg\|png` | Topluluk logoları (yoksa monogram placeholder gösterilir) |

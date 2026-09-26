@@ -16,6 +16,8 @@ export interface CommunityAbout {
   slug: string;
   /** 2-4 cümlelik tanıtım metni — topluluk başkanı düzenler */
   about: string;
+  /** Topluluğun Instagram URL'i; boşsa kartta Instagram butonu gizlenir */
+  instagram?: string;
 }
 
 export type TeamRole = 'Başkan' | 'Başkan Yardımcısı';
@@ -40,6 +42,8 @@ export interface SocialLinks {
   linkedin: string;
   github: string;
   discord: string;
+  /** WhatsApp grup davet URL'i — hero altındaki CTA butonunda da kullanılır */
+  whatsapp: string;
 }
 
 export interface AboutData {

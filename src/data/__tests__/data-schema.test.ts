@@ -72,12 +72,20 @@ describe('about.json şeması', () => {
     expect(about.hero.intro.trim().length).toBeGreaterThan(0);
   });
 
-  it('communities dizisi communities.ts’teki 5 slug’ı birebir kapsar', () => {
+  it('communities dizisi communities.ts’teki tüm slug’ları birebir kapsar', () => {
     const slugs = about.communities.map((c) => c.slug);
     expect(new Set(slugs).size, 'slug tekrarı var').toBe(slugs.length);
     expect(slugs.sort()).toEqual([...validSlugs].sort());
     for (const c of about.communities) {
       expect(c.about.trim().length, `${c.slug}.about boş`).toBeGreaterThan(0);
+    }
+  });
+
+  it('topluluk instagram alanları verilmişse geçerli http(s) URL’dir', () => {
+    for (const c of about.communities) {
+      if (c.instagram !== undefined && c.instagram.trim().length > 0) {
+        expect(c.instagram, `${c.slug}.instagram URL değil`).toMatch(/^https?:\/\//);
+      }
     }
   });
 
@@ -94,8 +102,8 @@ describe('about.json şeması', () => {
     }
   });
 
-  it('socials 4 platformu string olarak içerir; dolu ise http(s) URL’dir', () => {
-    for (const key of ['instagram', 'linkedin', 'github', 'discord'] as const) {
+  it('socials 5 platformu string olarak içerir; dolu ise http(s) URL’dir', () => {
+    for (const key of ['instagram', 'linkedin', 'github', 'discord', 'whatsapp'] as const) {
       const value = about.socials[key];
       expect(typeof value, `socials.${key} tip`).toBe('string');
       if (value.trim().length > 0) {

@@ -6,23 +6,38 @@
   "communities": [
     {
       "slug": "ana-topluluk",
-      "about": "Ana Topluluk, tüm alt ekiplerin çatısı ve koordinasyon merkezidir. Dönem boyunca teknik sohbetler, kariyer etkinlikleri, atölyeler ve sosyal buluşmalar düzenler; alt toplulukların projelerine ortam ve destek sağlar. Bilgisayar bilimine ilgi duyan herkesin ilk durağıdır."
+      "about": "Ana Topluluk, tüm alt ekiplerin çatısı ve koordinasyon merkezidir. Dönem boyunca teknik sohbetler, kariyer etkinlikleri, atölyeler ve sosyal buluşmalar düzenler; alt toplulukların projelerine ortam ve destek sağlar. Bilgisayar bilimine ilgi duyan herkesin ilk durağıdır.",
+      "instagram": "https://www.instagram.com/tobb_bilgisayar_toplulugu"
     },
     {
       "slug": "fintech",
-      "about": "FinTech Topluluğu, finans ve teknolojinin kesişiminde çalışmak isteyen öğrencileri bir araya getirir. Ödeme sistemleri, bankacılık teknolojileri ve veri odaklı finans ürünleri üzerine atölyeler, sektör buluşmaları ve uygulamalı projeler yürütür."
+      "about": "FinTech Topluluğu, finans ve teknolojinin kesişiminde çalışmak isteyen öğrencileri bir araya getirir. Ödeme sistemleri, bankacılık teknolojileri ve veri odaklı finans ürünleri üzerine atölyeler, sektör buluşmaları ve uygulamalı projeler yürütür.",
+      "instagram": "https://www.instagram.com/tobb_fintech_kulubu"
     },
     {
       "slug": "app-gelistirme",
-      "about": "App Geliştirme Topluluğu, mobil ve web uygulaması geliştirmek isteyenlerin üretim alanıdır. Fikir aşamasından yayın sürecine kadar ürün geliştirmeyi pratik eder; ekip içi projeler ve kod incelemeleriyle deneyim paylaşımını destekler."
+      "about": "App Geliştirme Topluluğu, mobil ve web uygulaması geliştirmek isteyenlerin üretim alanıdır. Fikir aşamasından yayın sürecine kadar ürün geliştirmeyi pratik eder; ekip içi projeler ve kod incelemeleriyle deneyim paylaşımını destekler.",
+      "instagram": "https://www.instagram.com/tobb_uygulama_kulubu"
     },
     {
       "slug": "ai",
-      "about": "AI Topluluğu, yapay zekâ ve makine öğrenmesine ilgi duyan öğrenciler için kuruldu. Okuma grupları, uygulamalı atölyeler ve araştırmadan uygulamaya uzanan projelerle üyelerin bu alanda derinleşmesini hedefler."
+      "about": "AI Topluluğu, yapay zekâ ve makine öğrenmesine ilgi duyan öğrenciler için kuruldu. Okuma grupları, uygulamalı atölyeler ve araştırmadan uygulamaya uzanan projelerle üyelerin bu alanda derinleşmesini hedefler.",
+      "instagram": "https://www.instagram.com/tobbyapayzeka"
     },
     {
       "slug": "oyun-gelistirme",
-      "about": "Oyun Geliştirme Topluluğu, oyun tasarımı ve geliştirmeyle ilgilenenleri buluşturur. Game jam'ler, prototip çalışmaları ve ortak oyun projeleriyle üyeler hem teknik hem de yaratıcı yönlerini geliştirir."
+      "about": "Oyun Geliştirme Topluluğu, oyun tasarımı ve geliştirmeyle ilgilenenleri buluşturur. Game jam'ler, prototip çalışmaları ve ortak oyun projeleriyle üyeler hem teknik hem de yaratıcı yönlerini geliştirir.",
+      "instagram": "https://www.instagram.com/tobb_oyun_kulubu"
+    },
+    {
+      "slug": "blockchain",
+      "about": "Blockchain Topluluğu, blokzincir teknolojilerine meraklı öğrencileri bir araya getirir. Akıllı kontrat geliştirme, merkeziyetsiz uygulamalar ve Web3 ekosistemi üzerine atölyeler, okuma grupları ve uygulamalı projeler yürütür.",
+      "instagram": "https://www.instagram.com/tobb.blockchain.kulubu"
+    },
+    {
+      "slug": "siber-guvenlik",
+      "about": "Siber Güvenlik Topluluğu, güvenlik araştırmalarına ve savunma pratiklerine ilgi duyan öğrencileri buluşturur. CTF yarışmaları, sızma testi atölyeleri ve güvenli yazılım geliştirme çalışmalarıyla üyelerin bu alanda deneyim kazanmasını hedefler.",
+      "instagram": "https://www.instagram.com/tobb_siberguvenlik_kulubu"
     }
   ],
   "team": [
@@ -60,12 +75,27 @@
         { "role": "Başkan", "name": "", "title": "" },
         { "role": "Başkan Yardımcısı", "name": "", "title": "" }
       ]
+    },
+    {
+      "communitySlug": "blockchain",
+      "members": [
+        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+      ]
+    },
+    {
+      "communitySlug": "siber-guvenlik",
+      "members": [
+        { "role": "Başkan", "name": "", "title": "" },
+        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
+      ]
     }
   ],
   "socials": {
-    "instagram": "",
-    "linkedin": "",
+    "instagram": "https://www.instagram.com/tobb_bilgisayar_toplulugu",
+    "linkedin": "https://www.linkedin.com/company/tobb-etu-computer-science-community/",
     "github": "",
-    "discord": ""
+    "discord": "",
+    "whatsapp": "https://chat.whatsapp.com/Lu4dn9mEYQ6BmqPcS4vqTJ"
   }
 }

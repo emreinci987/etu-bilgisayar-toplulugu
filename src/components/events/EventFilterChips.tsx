@@ -6,7 +6,7 @@ interface Props {
   onChange: (slug: string | null) => void;
 }
 
-/** 'Tümü' + 5 topluluk filtre çipi; aktif çip amber vurgulu */
+/** 'Tümü' + her topluluk için bir filtre çipi; aktif çip amber vurgulu */
 export default function EventFilterChips({ active, onChange }: Props) {
   const chipClass = (isActive: boolean) =>
     `rounded border px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
