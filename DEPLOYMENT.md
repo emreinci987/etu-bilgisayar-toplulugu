@@ -1,7 +1,7 @@
-# Deployment — Docker ile Self-Host
+# Deployment — Docker ile Self-Host (Windows Sunucu)
 
-Site, lab'ındaki 2. bilgisayarda (sunucu) Docker konteyneri olarak çalışır ve
-`emre-inci.com` altındaki bir subdomain'den (örn. `topluluk.emre-inci.com`)
+Site, lab'ındaki 2. bilgisayarda (**Windows**) Docker konteyneri olarak çalışır
+ve `emre-inci.com` altındaki bir subdomain'den (örn. `topluluk.emre-inci.com`)
 yayınlanır.
 
 Mimari: **Dockerfile** (multi-stage) önce `node:20-alpine` ile `npm ci` +
@@ -9,36 +9,55 @@ Mimari: **Dockerfile** (multi-stage) önce `node:20-alpine` ile `npm ci` +
 edilir. Nginx konfigürasyonu `nginx.conf` içindedir (SPA fallback, gzip,
 statik asset cache, temel güvenlik header'ları).
 
+> Komutlar **PowerShell** içindir (Windows 10/11'de yüklü gelir). Komutları
+> çalıştırırken PowerShell'i yönetici olarak açman gereken yerler ayrıca
+> belirtilmiştir.
+
 ---
 
-## a) Sunucuya Docker Kurulumu
+## a) Sunucuya Docker Kurulumu (Windows)
 
-Lab bilgisayarı Ubuntu/Debian tabanlı bir Linux varsayılmıştır (diğer
-dağıtımlar için [Docker Engine dokümanına](https://docs.docker.com/engine/install/)
-bak):
+1. **WSL2'yi etkinleştir** (Docker Desktop'un altyapısı). Yönetici PowerShell'de:
 
-```bash
-# Docker Engine + Compose plugin (resmî repo üzerinden)
-curl -fsSL https://get.docker.com | sh
+   ```powershell
+   wsl --install
+   ```
 
-# Kullanıcıyı docker grubuna ekle (sudo'suz kullanım için)
-sudo usermod -aG docker $USER
-# Grup değişikliğinin etkinleşmesi için oturumu kapatıp tekrar aç
+   Kurulum sonrası bilgisayarı yeniden başlat. (Çoğu güncel Windows 10/11'de bu
+   tek komut yeterli; eski sürümlerde "Sanal Makine Platformu" ve "Linux için
+   Windows Alt Sistemi" özelliklerini elle açman gerekebilir.)
 
-# Doğrulama
-docker --version
-docker compose version
-```
+2. **Docker Desktop for Windows'u kur:**
+   [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/)
+   adresinden indir, kurulumda **"Use WSL 2 instead of Hyper-V"** seçeneği
+   işaretli kalsın.
 
-macOS/Windows sunucu kullanılacaksa Docker Desktop yeterlidir.
+3. **Otomatik başlatmayı aç:** Docker Desktop → Settings → General →
+   **"Start Docker Desktop when you sign in"** işaretli olsun. Böylece lab
+   bilgisayarı yeniden başlatıldığında site kendiliğinden ayağa kalkar
+   (konteyner `restart: unless-stopped` ile işaretli).
+
+4. **Git kur** (yoksa): [git-scm.com/download/win](https://git-scm.com/download/win)
+
+5. **Doğrulama** (PowerShell):
+
+   ```powershell
+   docker --version
+   docker compose version
+   git --version
+   ```
+
+> Not: Docker Desktop arka planda çalışmadan `docker` komutları çalışmaz;
+> komut vermeden önce Docker Desktop'un açık olduğundan emin ol (otomatik
+> başlatma açıksa zaten açık olur).
 
 ---
 
 ## b) Repo'yu Çekme ve Çalıştırma
 
-```bash
+```powershell
 # Repo'yu çek (ilk kurulumda)
-git clone <repo-url> etu-bilgisayar-toplulugu
+git clone https://github.com/emreinci987/etu-bilgisayar-toplulugu.git
 cd etu-bilgisayar-toplulugu
 
 # İmajı derle ve arka planda başlat
@@ -48,17 +67,21 @@ docker compose up -d --build
 Konteyner adı `etu-bilgisayar-toplulugu`, `restart: unless-stopped` ile açılışta
 ve çökmede otomatik yeniden başlar. Site sunucuda **8080** portunda yayında:
 
-```bash
+```powershell
 # Sunucunun kendisinden test
-curl -I http://localhost:8080
+curl.exe -I http://localhost:8080
 
 # Ağ içindeki başka bir cihazdan (sunucunun LAN IP'si ile)
 # http://192.168.1.X:8080
 ```
 
+> PowerShell'de `curl` tek başına `Invoke-WebRequest` kısayoludur; gerçek curl
+> davranışı için `curl.exe` yaz. LAN IP'ni öğrenmek için: `ipconfig` →
+> "IPv4 Address".
+
 Faydalı komutlar:
 
-```bash
+```powershell
 docker compose logs -f        # logları takip et
 docker compose ps             # durum
 docker compose restart        # yeniden başlat
@@ -71,7 +94,7 @@ docker compose down           # durdur ve sil
 
 İki alternatif var. **Önerilen: Seçenek 2 (Cloudflare Tunnel)** — router'da
 port açmanı, statik IP almanı veya NAT arkasında kalmayı dert etmene gerek yok;
-ev interneti/CGNAT ile bile çalışır.
+ev/lab interneti ve CGNAT ile bile çalışır, HTTPS'i otomatik halleder.
 
 Her iki seçenekte de önce şunu yap:
 
@@ -86,67 +109,75 @@ Her iki seçenekte de önce şunu yap:
 **Ne zaman:** Sunucunun ağdan doğrudan dışarı açılmasında sorun yoksa ve ISS
 dış IP'yi değiştirmiyorsa (veya DDNS ile idare edebiliyorsan).
 
-1. **Dış IP'ni öğren:** Sunucuda `curl ifconfig.me` veya [whatismyip.com](https://whatismyip.com).
-   Not: Bazı ISS'ler CGNAT kullanır — dış IP router'ın WAN IP'siyle uyuşmuyorsa
-   bu seçenek çalışmaz, Seçenek 2'ye geç.
+1. **Dış IP'ni öğren:** PowerShell'de `curl.exe ifconfig.me` veya
+   [whatismyip.com](https://whatismyip.com). Not: Bazı ISS'ler CGNAT kullanır —
+   dış IP, router'ın WAN IP'siyle uyuşmuyorsa bu seçenek çalışmaz, Seçenek 2'ye
+   geç.
 2. **DNS sağlayıcısında A kaydı oluştur:**
    - Host/Name: `topluluk`
    - Type: `A`
    - Value: dış IP adresin
    - TTL: 300 (5 dk, değişiklik hızlı yayılsın)
 3. **Router'da port forwarding:** Dışarıdan gelen 80 (HTTP) ve 443 (HTTPS)
-   trafiğini sunucunun LAN IP'sine yönlendir, örn. `192.168.1.X:8080` (dış 80 →
-   iç 8080). HTTPS kullanacaksan sunucuda Caddy/Nginx Proxy Manager gibi bir
-   reverse proxy ile Let's Encrypt sertifikası alman gerekir (dış 443 → proxy,
-   proxy → `localhost:8080`).
-4. **Doğrulama:** `curl -I http://topluluk.emre-inci.com` — DNS yayılması birkaç
-   dakika sürebilir.
+   trafiğini sunucunun LAN IP'sine yönlendir, örn. dış 80 → `192.168.1.X:8080`.
+   HTTPS kullanacaksan sunucuda Caddy/Nginx Proxy Manager gibi bir reverse
+   proxy ile Let's Encrypt sertifikası alman gerekir (dış 443 → proxy, proxy →
+   `localhost:8080`).
+4. **Windows Güvenlik Duvarı'nda port aç:** Yönetici PowerShell'de:
+
+   ```powershell
+   New-NetFirewallRule -DisplayName "Topluluk Sitesi 8080" -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow
+   ```
+
+5. **Doğrulama:** `curl.exe -I http://topluluk.emre-inci.com` — DNS yayılması
+   birkaç dakika sürebilir.
 
 **Dinamik IP riski ve çözümü:** ISS dış IP'yi değiştirirse site erişilemez hale
 gelir. Çözümler:
 
 - **ISS'ten statik IP iste** (çoğu zaman ücretli).
-- **DDNS kullan:** Sunucuya [`ddclient`](https://github.com/ddclient/ddclient)
-  kurup DNS kaydını otomatik güncelle (Cloudflare DNS, Route53 vb.
-  desteklenir) veya [DuckDNS](https://www.duckdns.org) ile ücretsiz bir
-  hostname alıp `topluluk.emre-inci.com`'u ona **CNAME** olarak bağla.
-  CNAME yolu: DuckDNS hostname'i dinamik IP'yi takip eder, senin DNS kaydın
-  sadece ona işaret ettiği için IP değişiminde dokunman gerekmez.
+- **DDNS kullan:** [DuckDNS](https://www.duckdns.org) ile ücretsiz bir hostname
+  alıp `topluluk.emre-inci.com`'u ona **CNAME** olarak bağla; IP güncellemesi
+  için DuckDNS'in Windows istemcisi (veya basit bir Zamanlanmış Görev script'i)
+  kullanılabilir. CNAME yolu: DuckDNS hostname'i dinamik IP'yi takip eder,
+  senin DNS kaydın sadece ona işaret ettiği için IP değişiminde dokunman
+  gerekmez. (Cloudflare DNS kullanıyorsan Cloudflare API ile IP güncelleyen
+  PowerShell script'leri de var.)
 
 ### Seçenek 2 — Cloudflare Tunnel (önerilen)
 
 **Ne zaman:** Her durumda. Port açmadan, NAT/CGNAT arkasından bile güvenli
-yayın sağlar; HTTPS sertifikasını Cloudflare otomatik yönetir.
+yayın sağlar; HTTPS sertifikasını Cloudflare otomatik yönetir; güvenlik
+duvarı kuralı da gerekmez (bağlantı dışarı doğru kurulur).
 
 **Ön koşul:** `emre-inci.com`'un nameserver'ları Cloudflare'e taşınmış olmalı
 (ücretsiz plan yeterli). DNS başka sağlayıcıdaysa ya domain'i Cloudflare'e
-taşı ya da sadece bu subdomain'i kullanmak için alanın tamamını Cloudflare
-DNS'e delege et.
+taşı ya da alanın tamamını Cloudflare DNS'e delege et.
 
-1. **cloudflared kur** (sunucuda):
+1. **cloudflared kur** (yönetici PowerShell):
 
-   ```bash
-   # Debian/Ubuntu
-   curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
-   echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
-   sudo apt update && sudo apt install cloudflared
+   ```powershell
+   winget install --id Cloudflare.cloudflared
    ```
+
+   (winget yoksa [releases](https://github.com/cloudflare/cloudflared/releases)
+   sayfasından Windows `.msi` paketini indir.)
 
 2. **Cloudflare'e bağlan ve tunnel oluştur:**
 
-   ```bash
+   ```powershell
    cloudflared tunnel login            # tarayıcıda yetki ver
    cloudflared tunnel create etu-site  # tunnel adı
    ```
 
-   Komut bir tunnel ID ve `~/.cloudflared/<TUNNEL_ID>.json` credentials
-   dosyası üretir.
+   Komut bir tunnel ID ve `%USERPROFILE%\.cloudflared\<TUNNEL_ID>.json`
+   credentials dosyası üretir.
 
-3. **Tunnel konfigürasyonu** — `~/.cloudflared/config.yml`:
+3. **Tunnel konfigürasyonu** — `%USERPROFILE%\.cloudflared\config.yml`:
 
    ```yaml
    tunnel: <TUNNEL_ID>
-   credentials-file: /home/<kullanici>/.cloudflared/<TUNNEL_ID>.json
+   credentials-file: C:\Users\<kullanici>\.cloudflared\<TUNNEL_ID>.json
 
    ingress:
      - hostname: topluluk.emre-inci.com
@@ -156,23 +187,33 @@ DNS'e delege et.
 
 4. **DNS kaydını oluştur** (Cloudflare panelinde CNAME'i otomatik yazar):
 
-   ```bash
+   ```powershell
    cloudflared tunnel route dns etu-site topluluk.emre-inci.com
    ```
 
-5. **Servis olarak çalıştır:**
+5. **Windows servisi olarak çalıştır** (yönetici PowerShell):
 
-   ```bash
-   sudo cloudflared service install
-   sudo systemctl enable --now cloudflared
+   ```powershell
+   cloudflared service install
    ```
+
+   Bu, cloudflared'i Windows servisi olarak kurar — bilgisayar her açıldığında
+   tunnel otomatik başlar (Linux'taki systemd'nin karşılığı). Servisi yönetmek
+   için: `services.msc` → "Cloudflared" veya `Get-Service cloudflared`.
+
+   > Not: Servis olarak çalışınca config'i
+   > `C:\Windows\System32\config\systemprofile\.cloudflared\` altında arar.
+   > `cloudflared service install` sırasında config yolunu kendisi kopyalar /
+   > sorar; sorun yaşarsan `config.yml`'i ve credentials JSON'unu o dizine
+   > elle kopyala.
 
 6. **Doğrulama:** `https://topluluk.emre-inci.com` birkaç dakika içinde açık
    yeşil kilit ile yayında olmalı.
 
 > Alternatif: Cloudflare Zero Trust dashboard'dan "remotely managed" tunnel da
 > kurulabilir; konfigürasyon panelden yönetilir, sunucuda sadece connector
-> çalışır. İkisi de aynı sonucu verir.
+> çalışır. Windows'ta bu yol daha az dosya taşıma gerektirdiği için pratik
+> olabilir. İkisi de aynı sonucu verir.
 
 ---
 
@@ -209,9 +250,9 @@ DNS'e delege et.
 
 ## e) Güncelleme Akışı
 
-Kod veya içerik (`events.json`, metinler vb.) değişince sunucuda:
+Kod veya içerik (`events.json`, metinler vb.) değişince sunucuda PowerShell'de:
 
-```bash
+```powershell
 cd etu-bilgisayar-toplulugu
 git pull
 docker compose up -d --build
@@ -236,10 +277,23 @@ Gereksiz imajları ara sıra temizle: `docker image prune`
 2. Admin PR'ı inceler ve **merge** eder.
 3. Sunucuda güncelleme akışı uygulanır (bkz. e):
 
-   ```bash
-   git pull && docker compose up -d --build
+   ```powershell
+   git pull; docker compose up -d --build
    ```
 
 `public/` dosyaları build sırasında `dist/` içine kopyalanıp imaja gömüldüğü
 için yeniden derleme zorunludur; çalışan konteynere dosya atılması yeterli
 değildir.
+
+---
+
+## Özet Kontrol Listesi
+
+- [ ] WSL2 + Docker Desktop kurulu, otomatik başlatma açık
+- [ ] Repo klonlandı, `docker compose up -d --build` çalıştı
+- [ ] `http://localhost:8080` sunucuda açılıyor
+- [ ] Subdomain kararı verildi: `topluluk.emre-inci.com` (veya başka ad)
+- [ ] Seçenek 1 (A kaydı + port forwarding + güvenlik duvarı kuralı) **veya**
+      Seçenek 2 (Cloudflare Tunnel, önerilen) kuruldu
+- [ ] `https://topluluk.emre-inci.com` dışarıdan erişilebilir
+- [ ] QR kodu bu HTTPS adresine yönlendiriyor
