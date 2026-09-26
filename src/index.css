@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Tema paletleri — tailwind.config.js bu değişkenleri coal/cream/amber
+ * sınıflarına bağlar. Aydınlık tema (:root) beyaz zemin + mavi vurgu;
+ * koyu tema (.dark) sıcak coal zemin + amber vurgu.
+ */
+:root {
+  /* Beyaz / açık mavi-gri zeminler */
+  --coal: 255 255 255;    /* ana zemin */
+  --coal-900: 248 250 252;
+  --coal-800: 241 245 249;
+  --coal-700: 226 232 240;
+  --coal-600: 203 213 225; /* ince border */
+
+  /* Koyu lacivert metinler */
+  --cream: 15 23 42;      /* ana metin */
+  --cream-dim: 71 85 105; /* ikincil metin */
+  --cream-faint: 100 116 139; /* soluk metin / etiket */
+
+  /* Mavi vurgu */
+  --amber: 37 99 235;
+  --amber-soft: 29 78 216;
+  --amber-dim: 191 219 254;
+}
+
+.dark {
+  /* Sıcak, düşük doygunluklu koyu tema */
+  --coal: 18 16 14;       /* ana zemin */
+  --coal-900: 23 21 17;
+  --coal-800: 28 26 22;
+  --coal-700: 38 35 30;
+  --coal-600: 58 54 47;   /* ince border */
+
+  --cream: 236 230 218;   /* ana metin */
+  --cream-dim: 168 159 144; /* ikincil metin */
+  --cream-faint: 110 103 91; /* soluk metin / etiket */
+
+  --amber: 232 163 61;    /* tek vurgu rengi */
+  --amber-soft: 201 135 44;
+  --amber-dim: 138 98 36;
+}
+
 @layer base {
   html {
     @apply bg-coal text-cream font-sans antialiased;

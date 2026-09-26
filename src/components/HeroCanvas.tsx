@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { usePrefersReducedMotion } from '../hooks';
+import { usePrefersReducedMotion, useTheme } from '../hooks';
+
+/** Tema bazlı sahne renkleri */
+const SCENE_COLORS = {
+  dark: { gridCenter: 0x8a6224, gridLine: 0x3a362f, particle: 0xe8a33d },
+  light: { gridCenter: 0x93c5fd, gridLine: 0xcbd5e1, particle: 0x2563eb },
+} as const;
 
 /**
  * Arka planda dönen wireframe grid + parçacık alanı.
@@ -13,12 +19,14 @@ import { usePrefersReducedMotion } from '../hooks';
 export default function HeroCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    const colors = SCENE_COLORS[theme];
 
     // --- Sahne ---
     const scene = new THREE.Scene();
@@ -35,7 +43,7 @@ export default function HeroCanvas() {
     scene.add(group);
 
     // --- Wireframe zemin grid'i (devre kartı hissi) ---
-    const grid = new THREE.GridHelper(30, 42, 0x8a6224, 0x3a362f);
+    const grid = new THREE.GridHelper(30, 42, colors.gridCenter, colors.gridLine);
     (grid.material as THREE.Material).transparent = true;
     (grid.material as THREE.Material).opacity = 0.35;
     grid.position.y = -1.2;
@@ -52,7 +60,7 @@ export default function HeroCanvas() {
     const particleGeo = new THREE.BufferGeometry();
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particleMat = new THREE.PointsMaterial({
-      color: 0xe8a33d,
+      color: colors.particle,
       size: 0.045,
       transparent: true,
       opacity: 0.55,
@@ -114,7 +122,7 @@ export default function HeroCanvas() {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, theme]);
 
   return (
     <div

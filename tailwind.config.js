@@ -1,26 +1,33 @@
 /** @type {import('tailwindcss').Config} */
+
+// Renkler CSS değişkenlerinden gelir (src/index.css).
+// :root       -> aydınlık tema (beyaz zemin, mavi vurgu)
+// .dark       -> koyu tema (coal zemin, amber vurgu)
+// Bu sayede tüm bileşenlerdeki coal/cream/amber sınıf adları değişmeden temaya göre renk üretir.
+const rgb = (variable) => `rgb(var(${variable}) / <alpha-value>)`;
+
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        // Sıcak, düşük doygunluklu koyu tema
         coal: {
-          DEFAULT: '#12100e', // ana zemin
-          900: '#171511',
-          800: '#1c1a16',
-          700: '#26231e',
-          600: '#3a362f', // ince border
+          DEFAULT: rgb('--coal'),
+          900: rgb('--coal-900'),
+          800: rgb('--coal-800'),
+          700: rgb('--coal-700'),
+          600: rgb('--coal-600'),
         },
         cream: {
-          DEFAULT: '#ece6da', // ana metin
-          dim: '#a89f90',     // ikincil metin
-          faint: '#6e675b',   // soluk metin / etiket
+          DEFAULT: rgb('--cream'),
+          dim: rgb('--cream-dim'),
+          faint: rgb('--cream-faint'),
         },
         amber: {
-          DEFAULT: '#e8a33d', // tek vurgu rengi
-          soft: '#c9872c',
-          dim: '#8a6224',
+          DEFAULT: rgb('--amber'),
+          soft: rgb('--amber-soft'),
+          dim: rgb('--amber-dim'),
         },
       },
       fontFamily: {

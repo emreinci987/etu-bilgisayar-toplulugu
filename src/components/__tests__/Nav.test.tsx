@@ -48,6 +48,22 @@ describe('Nav (integration)', () => {
     expect(screen.getAllByRole('link', { name: 'Etkinlikler' })).toHaveLength(1);
   });
 
+  it('tema butonu koyu/aydınlık arasında geçiş yapar', async () => {
+    const user = userEvent.setup();
+    document.documentElement.classList.add('dark');
+    renderNav();
+
+    const toLight = screen.getByRole('button', { name: 'Aydınlık temaya geç' });
+    await user.click(toLight);
+    expect(document.documentElement.classList.contains('dark')).toBe(false);
+    expect(screen.getByRole('button', { name: 'Koyu temaya geç' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Koyu temaya geç' }));
+    expect(document.documentElement.classList.contains('dark')).toBe(true);
+
+    document.documentElement.classList.remove('dark');
+  });
+
   it('mobil menüde bir linke tıklayınca menü kapanır', async () => {
     const user = userEvent.setup();
     renderNav();

@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import type { Event, EventsFile } from '../data/events.types';
 import rawEvents from '../data/events.json';
 
+export { useTheme } from './useTheme';
+export type { Theme } from './useTheme';
+
 const allEvents = (rawEvents as EventsFile).items;
 
 /** Tarihe göre yeniden eskiye sıralı tüm etkinlikler */

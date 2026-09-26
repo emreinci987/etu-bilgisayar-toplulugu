@@ -1,10 +1,24 @@
 <!doctype html>
-<html lang="tr" class="dark">
+<html lang="tr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="TOBB ETÜ Bilgisayar Topluluğu — öğrencilerin ürettiği teknoloji topluluğu." />
-    <meta name="theme-color" content="#12100e" />
+    <meta name="theme-color" content="#ffffff" />
+    <script>
+      // FOUC olmadan ilk temayı uygula: localStorage tercihi > aydınlık (varsayılan)
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('etu-theme');
+          var theme = stored === 'dark' || stored === 'light' ? stored : 'light';
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', theme === 'dark' ? '#12100e' : '#ffffff');
+        } catch (e) {
+          // localStorage kapalıysa varsayılan aydınlık kalır
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
