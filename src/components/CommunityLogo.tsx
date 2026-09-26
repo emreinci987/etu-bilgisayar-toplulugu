@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 interface Props {
   slug: string;
   shortName: string;
+  /** CSS rengi; hex ya da var(--c-<slug>) gibi değişken referansı olabilir */
   color: string;
   /** px cinsinden kutu boyutu */
   size?: number;
@@ -31,7 +32,7 @@ export default function CommunityLogo({ slug, shortName, color, size = 64, class
           width: size,
           height: size,
           color,
-          backgroundColor: `${color}14`, // %8 opaklıkta renk tonu
+          backgroundColor: `color-mix(in srgb, ${color} 8%, transparent)`, // %8 opaklıkta renk tonu
         }}
         aria-hidden="true"
       >

@@ -24,6 +24,15 @@
   --amber: 37 99 235;
   --amber-soft: 29 78 216;
   --amber-dim: 191 219 254;
+
+  /* Topluluk marka renkleri — aydınlıkta beyaz zeminde okunaklı koyu tonlar */
+  --c-ana-topluluk: #1d4ed8;   /* blue-700 */
+  --c-fintech: #047857;         /* emerald-700 */
+  --c-app-gelistirme: #c2410c; /* orange-700 */
+  --c-ai: #0f766e;              /* teal-700 */
+  --c-oyun-gelistirme: #b45309; /* amber-700 */
+  --c-blockchain: #7e22ce;      /* purple-700 */
+  --c-siber-guvenlik: #0369a1;  /* sky-700 */
 }
 
 .dark {
@@ -41,6 +50,15 @@
   --amber: 232 163 61;    /* tek vurgu rengi */
   --amber-soft: 201 135 44;
   --amber-dim: 138 98 36;
+
+  /* Topluluk marka renkleri — koyu zemine uygun sıcak tonlar */
+  --c-ana-topluluk: #e8a33d;
+  --c-fintech: #7fb069;
+  --c-app-gelistirme: #e07a5f;
+  --c-ai: #81b29a;
+  --c-oyun-gelistirme: #f2cc8f;
+  --c-blockchain: #b48ead;
+  --c-siber-guvenlik: #7f9bb3;
 }
 
 @layer base {
