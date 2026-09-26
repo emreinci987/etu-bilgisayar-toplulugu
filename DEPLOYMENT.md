@@ -9,6 +9,16 @@ Mimari: **Dockerfile** (multi-stage) önce `node:20-alpine` ile `npm ci` +
 edilir. Nginx konfigürasyonu `nginx.conf` içindedir (SPA fallback, gzip,
 statik asset cache, temel güvenlik header'ları).
 
+`docker-compose.yml` iki servis çalıştırır:
+
+| Servis | Konteyner | Görev |
+| --- | --- | --- |
+| `web` | `etu-bilgisayar-toplulugu` | Nginx ile siteyi servis eder (LAN testi için `8080` portu açık) |
+| `tunnel` | `etu-bilgisayar-toplulugu-tunnel` | Cloudflare Tunnel connector'ı; siteyi port açmadan `topluluk.emre-inci.com`'a yayınlar |
+
+Yani sunucuda Docker dışında hiçbir şey (cloudflared, reverse proxy, güvenlik
+duvarı kuralı) kurulmaz — tek komut: `docker compose up -d --build`.
+
 > Komutlar **PowerShell** içindir (Windows 10/11'de yüklü gelir). Komutları
 > çalıştırırken PowerShell'i yönetici olarak açman gereken yerler ayrıca
 > belirtilmiştir.
@@ -60,12 +70,20 @@ statik asset cache, temel güvenlik header'ları).
 git clone https://github.com/emreinci987/etu-bilgisayar-toplulugu.git
 cd etu-bilgisayar-toplulugu
 
-# İmajı derle ve arka planda başlat
+# Tunnel token'ı için .env oluştur (değeri bkz. c) Cloudflare Tunnel, adım 2)
+Copy-Item .env.example .env
+notepad .env   # CLOUDFLARE_TUNNEL_TOKEN=<token> satırını doldur, kaydet
+
+# İmajı derle ve iki servisi (web + tunnel) arka planda başlat
 docker compose up -d --build
 ```
 
-Konteyner adı `etu-bilgisayar-toplulugu`, `restart: unless-stopped` ile açılışta
-ve çökmede otomatik yeniden başlar. Site sunucuda **8080** portunda yayında:
+> `.env` yoksa veya token boşsa compose şu hatayla durur:
+> `required variable CLOUDFLARE_TUNNEL_TOKEN is missing a value`.
+> `.env` git'e ve Docker imajına **girmez** (`.gitignore` / `.dockerignore`).
+
+Her iki konteyner de `restart: unless-stopped` ile açılışta ve çökmede otomatik
+yeniden başlar. Site sunucuda ayrıca **8080** portunda yayında (LAN testi için):
 
 ```powershell
 # Sunucunun kendisinden test
@@ -82,7 +100,8 @@ curl.exe -I http://localhost:8080
 Faydalı komutlar:
 
 ```powershell
-docker compose logs -f        # logları takip et
+docker compose logs -f        # tüm logları takip et
+docker compose logs -f tunnel # yalnızca tunnel logları ("Registered tunnel connection" görmelisin)
 docker compose ps             # durum
 docker compose restart        # yeniden başlat
 docker compose down           # durdur ve sil
@@ -90,132 +109,95 @@ docker compose down           # durdur ve sil
 
 ---
 
-## c) Subdomain Kurulumu
+## c) Subdomain Kurulumu — Cloudflare Tunnel
 
-İki alternatif var. **Önerilen: Seçenek 2 (Cloudflare Tunnel)** — router'da
-port açmanı, statik IP almanı veya NAT arkasında kalmayı dert etmene gerek yok;
-ev/lab interneti ve CGNAT ile bile çalışır, HTTPS'i otomatik halleder.
+Site dış dünyaya **Cloudflare Tunnel** ile açılır: connector (`tunnel` servisi)
+Cloudflare'e **dışarı doğru** bağlantı kurar, gelen istekleri Docker ağı
+üzerinden `web` konteynerine iletir. Bu yüzden:
 
-Her iki seçenekte de önce şunu yap:
+- Router'da **port açmaya**, statik IP almaya gerek yoktur; CGNAT arkasında bile çalışır.
+- Windows Güvenlik Duvarı'nda kural eklemeye gerek yoktur.
+- **HTTPS sertifikasını Cloudflare** otomatik yönetir.
 
-> **DNS sağlayıcında kayıt oluştur.** `emre-inci.com` DNS'i hangi panelde
-> yönetiliyorsa (registrar paneli, Cloudflare DNS vb.) oradan
-> `topluluk` (veya seçtiğin ad) için bir kayıt oluşturacaksın. Kayıt türü
-> seçeneğe göre değişir: Seçenek 1'de **A kaydı**, Seçenek 2'de Cloudflare
-> paneli kaydı senin için otomatik oluşturur.
+Tunnel **panelden yönetilir** (remotely-managed): tüm ayarlar Cloudflare
+panelinde durur, sunucuda yalnızca token ile çalışan connector vardır. Bu
+bölümün tamamı sunucuya dokunmadan, herhangi bir bilgisayardan tarayıcıyla
+**önceden** yapılabilir.
 
-### Seçenek 1 — DNS A Kaydı + Router Port Forwarding
+### 1. Ön koşullar
 
-**Ne zaman:** Sunucunun ağdan doğrudan dışarı açılmasında sorun yoksa ve ISS
-dış IP'yi değiştirmiyorsa (veya DDNS ile idare edebiliyorsan).
+- `emre-inci.com` Cloudflare hesabında **Active** olmalı (nameserver'lar
+  Cloudflare'e taşınmış; ücretsiz plan yeterli).
+- **DNS → Records** altında `topluluk` adlı eski bir kayıt varsa silin; yoksa
+  public hostname eklerken çakışma hatası alınır.
 
-1. **Dış IP'ni öğren:** PowerShell'de `curl.exe ifconfig.me` veya
-   [whatismyip.com](https://whatismyip.com). Not: Bazı ISS'ler CGNAT kullanır —
-   dış IP, router'ın WAN IP'siyle uyuşmuyorsa bu seçenek çalışmaz, Seçenek 2'ye
-   geç.
-2. **DNS sağlayıcısında A kaydı oluştur:**
-   - Host/Name: `topluluk`
-   - Type: `A`
-   - Value: dış IP adresin
-   - TTL: 300 (5 dk, değişiklik hızlı yayılsın)
-3. **Router'da port forwarding:** Dışarıdan gelen 80 (HTTP) ve 443 (HTTPS)
-   trafiğini sunucunun LAN IP'sine yönlendir, örn. dış 80 → `192.168.1.X:8080`.
-   HTTPS kullanacaksan sunucuda Caddy/Nginx Proxy Manager gibi bir reverse
-   proxy ile Let's Encrypt sertifikası alman gerekir (dış 443 → proxy, proxy →
-   `localhost:8080`).
-4. **Windows Güvenlik Duvarı'nda port aç:** Yönetici PowerShell'de:
+### 2. Tunnel'ı oluştur ve token'ı al
 
-   ```powershell
-   New-NetFirewallRule -DisplayName "Topluluk Sitesi 8080" -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow
+1. [dash.cloudflare.com](https://dash.cloudflare.com) → sol menü **Zero Trust**
+   (Cloudflare One). İlk girişte takım adı ve plan sorulur → **Free** planı seçin.
+2. **Networks → Tunnels → Create a tunnel** → **Cloudflared** → ad: `etu-site` → **Save tunnel**.
+3. Kurulum ekranında (işletim sistemi seçimi fark etmez, örn. **Docker**)
+   gösterilen komutun sonundaki uzun `eyJ...` değeri **token**'dır. Kopyalayıp
+   sunucudaki `.env` dosyasına yazın:
+
+   ```
+   CLOUDFLARE_TUNNEL_TOKEN=eyJhIjoi...
    ```
 
-5. **Doğrulama:** `curl.exe -I http://topluluk.emre-inci.com` — DNS yayılması
-   birkaç dakika sürebilir.
+   > Token parola gibidir: git'e, Discord'a, ekran görüntüsüne koymayın.
+   > Sızarsa panelden **tunnel → Configure → Refresh token** ile yenileyip
+   > `.env`'i güncelleyin, `docker compose up -d` ile tunnel'ı yeniden başlatın.
 
-**Dinamik IP riski ve çözümü:** ISS dış IP'yi değiştirirse site erişilemez hale
-gelir. Çözümler:
+4. Connector henüz bağlı olmadığı için bu ekranda beklemeden **Next**.
 
-- **ISS'ten statik IP iste** (çoğu zaman ücretli).
-- **DDNS kullan:** [DuckDNS](https://www.duckdns.org) ile ücretsiz bir hostname
-  alıp `topluluk.emre-inci.com`'u ona **CNAME** olarak bağla; IP güncellemesi
-  için DuckDNS'in Windows istemcisi (veya basit bir Zamanlanmış Görev script'i)
-  kullanılabilir. CNAME yolu: DuckDNS hostname'i dinamik IP'yi takip eder,
-  senin DNS kaydın sadece ona işaret ettiği için IP değişiminde dokunman
-  gerekmez. (Cloudflare DNS kullanıyorsan Cloudflare API ile IP güncelleyen
-  PowerShell script'leri de var.)
+### 3. Subdomain'i bağla (Public Hostname)
 
-### Seçenek 2 — Cloudflare Tunnel (önerilen)
+| Alan | Değer |
+| --- | --- |
+| Subdomain | `topluluk` |
+| Domain | `emre-inci.com` |
+| Path | *(boş)* |
+| Service Type | `HTTP` |
+| URL | **`web:80`** |
 
-**Ne zaman:** Her durumda. Port açmadan, NAT/CGNAT arkasından bile güvenli
-yayın sağlar; HTTPS sertifikasını Cloudflare otomatik yönetir; güvenlik
-duvarı kuralı da gerekmez (bağlantı dışarı doğru kurulur).
+**Save** → Cloudflare `topluluk.emre-inci.com` için DNS kaydını (CNAME)
+otomatik oluşturur.
 
-**Ön koşul:** `emre-inci.com`'un nameserver'ları Cloudflare'e taşınmış olmalı
-(ücretsiz plan yeterli). DNS başka sağlayıcıdaysa ya domain'i Cloudflare'e
-taşı ya da alanın tamamını Cloudflare DNS'e delege et.
+> URL neden `localhost:8080` değil? Connector kendi konteynerinde çalışır;
+> onun için `localhost` kendisidir. Compose, servisleri aynı Docker ağına
+> koyar ve `web` adıyla birbirine ulaştırır; `80` konteynerin iç portudur.
 
-1. **cloudflared kur** (yönetici PowerShell):
+Tunnel bağlanana kadar panelde durum **Inactive / Down** görünür — normaldir.
 
-   ```powershell
-   winget install --id Cloudflare.cloudflared
-   ```
+### 4. Sunucuda başlat ve doğrula
 
-   (winget yoksa [releases](https://github.com/cloudflare/cloudflared/releases)
-   sayfasından Windows `.msi` paketini indir.)
+```powershell
+docker compose up -d --build
+docker compose logs -f tunnel
+```
 
-2. **Cloudflare'e bağlan ve tunnel oluştur:**
+- Loglarda `Registered tunnel connection` satırlarını görün (genelde 4 adet).
+- Panelde tunnel durumu **Healthy** olur.
+- `https://topluluk.emre-inci.com` kilit simgesiyle açılır (DNS'in yayılması
+  birkaç dakika sürebilir).
 
-   ```powershell
-   cloudflared tunnel login            # tarayıcıda yetki ver
-   cloudflared tunnel create etu-site  # tunnel adı
-   ```
+### Sorun giderme
 
-   Komut bir tunnel ID ve `%USERPROFILE%\.cloudflared\<TUNNEL_ID>.json`
-   credentials dosyası üretir.
+| Belirti | Olası neden |
+| --- | --- |
+| Compose `CLOUDFLARE_TUNNEL_TOKEN is missing` hatası | `.env` yok, yanlış klasörde veya satır boş |
+| Tunnel logunda `Unauthorized` / `invalid token` | Token eksik/yanlış kopyalandı veya yenilendi |
+| Tunnel **Healthy** ama sitede **502 Bad Gateway** | Public hostname URL'i yanlış (`web:80` olmalı) veya `web` konteyneri çalışmıyor (`docker compose ps`) |
+| `topluluk.emre-inci.com` hiç çözülmüyor | Public hostname kaydedilmemiş veya DNS'te çakışan eski kayıt var |
 
-3. **Tunnel konfigürasyonu** — `%USERPROFILE%\.cloudflared\config.yml`:
+### Kapasite
 
-   ```yaml
-   tunnel: <TUNNEL_ID>
-   credentials-file: C:\Users\<kullanici>\.cloudflared\<TUNNEL_ID>.json
-
-   ingress:
-     - hostname: topluluk.emre-inci.com
-       service: http://localhost:8080
-     - service: http_status:404
-   ```
-
-4. **DNS kaydını oluştur** (Cloudflare panelinde CNAME'i otomatik yazar):
-
-   ```powershell
-   cloudflared tunnel route dns etu-site topluluk.emre-inci.com
-   ```
-
-5. **Windows servisi olarak çalıştır** (yönetici PowerShell):
-
-   ```powershell
-   cloudflared service install
-   ```
-
-   Bu, cloudflared'i Windows servisi olarak kurar — bilgisayar her açıldığında
-   tunnel otomatik başlar (Linux'taki systemd'nin karşılığı). Servisi yönetmek
-   için: `services.msc` → "Cloudflared" veya `Get-Service cloudflared`.
-
-   > Not: Servis olarak çalışınca config'i
-   > `C:\Windows\System32\config\systemprofile\.cloudflared\` altında arar.
-   > `cloudflared service install` sırasında config yolunu kendisi kopyalar /
-   > sorar; sorun yaşarsan `config.yml`'i ve credentials JSON'unu o dizine
-   > elle kopyala.
-
-6. **Doğrulama:** `https://topluluk.emre-inci.com` birkaç dakika içinde açık
-   yeşil kilit ile yayında olmalı.
-
-> Alternatif: Cloudflare Zero Trust dashboard'dan "remotely managed" tunnel da
-> kurulabilir; konfigürasyon panelden yönetilir, sunucuda sadece connector
-> çalışır. Windows'ta bu yol daha az dosya taşıma gerektirdiği için pratik
-> olabilir. İkisi de aynı sonucu verir.
-
----
+Cloudflare Tunnel'ın ücretsiz planda ziyaretçi/istek sayısı için bir limiti
+yoktur; günde yüzlerce, hatta binlerce ziyaret bu site için sorun değildir.
+Hash'li JS/CSS (`/assets/`) ve fotoğraflar (`.jpg`/`.webp`) Cloudflare'in
+kenar sunucularında önbelleğe alınır; lab bilgisayarına çoğunlukla yalnızca
+küçük `index.html` istekleri ulaşır. Asıl sınırlar lab'ın internet
+bağlantısı ve bilgisayarın açık kalmasıdır.
 
 ## d) Ortam Değişkenleri (ENV)
 
@@ -289,11 +271,18 @@ değildir.
 
 ## Özet Kontrol Listesi
 
+**Önceden (tarayıcıdan, sunucu gerekmez):**
+
+- [ ] `emre-inci.com` Cloudflare'de Active, `topluluk` için eski DNS kaydı yok
+- [ ] Zero Trust → Tunnels → `etu-site` oluşturuldu, token güvenli yere kaydedildi
+- [ ] Public hostname: `topluluk.emre-inci.com` → `HTTP` · `web:80`
+
+**Sunucuda:**
+
 - [ ] WSL2 + Docker Desktop kurulu, otomatik başlatma açık
-- [ ] Repo klonlandı, `docker compose up -d --build` çalıştı
+- [ ] Repo klonlandı, `.env` içinde `CLOUDFLARE_TUNNEL_TOKEN` dolu
+- [ ] `docker compose up -d --build` çalıştı, `docker compose ps` iki konteyneri de gösteriyor
 - [ ] `http://localhost:8080` sunucuda açılıyor
-- [ ] Subdomain kararı verildi: `topluluk.emre-inci.com` (veya başka ad)
-- [ ] Seçenek 1 (A kaydı + port forwarding + güvenlik duvarı kuralı) **veya**
-      Seçenek 2 (Cloudflare Tunnel, önerilen) kuruldu
+- [ ] Tunnel panelde **Healthy**
 - [ ] `https://topluluk.emre-inci.com` dışarıdan erişilebilir
 - [ ] QR kodu bu HTTPS adresine yönlendiriyor

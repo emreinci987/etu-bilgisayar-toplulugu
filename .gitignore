@@ -15,3 +15,6 @@ playwright/.cache
 .env.*
 !.env.example
 *.tsbuildinfo
+
+# Ham görsel kaynakları (işlenmiş halleri public/ altında)
+/images/

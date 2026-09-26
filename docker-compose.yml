@@ -3,5 +3,19 @@ services:
     build: .
     container_name: etu-bilgisayar-toplulugu
     restart: unless-stopped
+    # Yalnızca LAN'dan / sunucunun kendisinden test için; dış dünyaya yayın tunnel üzerinden
     ports:
       - "8080:80"
+
+  # Cloudflare Tunnel connector — siteyi port açmadan topluluk.emre-inci.com'a yayınlar.
+  # Token .env dosyasından okunur (bkz. .env.example ve DEPLOYMENT.md).
+  # Cloudflare panelindeki Public Hostname servisi: http://web:80
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: etu-bilgisayar-toplulugu-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN:?CLOUDFLARE_TUNNEL_TOKEN .env dosyasinda tanimli olmali}
+    depends_on:
+      - web
