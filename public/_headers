@@ -1,0 +1,14 @@
+# Cloudflare Workers static assets — tüm yanıtlara eklenen güvenlik header'ları.
+# Build sırasında dist/_headers olarak kopyalanır; site dosyası olarak servis edilmez.
+#
+# CSP'deki sha256 değeri index.html'deki inline tema script'ine aittir. O script
+# değişirse tarayıcı engeller; konsoldaki CSP hatası yeni hash'i verir, buraya yazın.
+# Yeni bir dış kaynak (font, analytics, embed) eklerken ilgili *-src'ye ekleyin.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-wzbgCA8FimPwxdSbkQe6goFznAbv3AhVEUJlwHn7e7I='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests

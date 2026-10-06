@@ -102,6 +102,21 @@ Settings → Domains & Routes içinden **Disable** edilebilir.
 
 ---
 
+## e) Güvenlik
+
+- **Header'lar** [`public/_headers`](public/_headers) dosyasında (CSP,
+  X-Frame-Options, nosniff…). Cloudflare build sonrası `dist/_headers`'ı okuyup
+  her yanıta ekler. Kontrol: `curl.exe -I https://etupctoplulugu.online`
+- **CSP hash'i:** `index.html`'deki inline tema script'ini değiştirirseniz
+  tarayıcı onu engeller (konsolda CSP hatası). Hatadaki yeni `sha256-...`
+  değerini `_headers`'a yazın. Yeni bir dış kaynak (font, analytics, embed)
+  eklerken de ilgili `*-src`'ye ekleyin; yoksa yüklenmez.
+- **Cloudflare paneli (yapıldı):** SSL/TLS → Edge Certificates →
+  Always Use HTTPS açık, Minimum TLS 1.2, HSTS (1 ay ile başla; *include
+  subdomains* ve *preload* kapalı).
+
+---
+
 ## Eski Docker + Cloudflare Tunnel Yöntemi (kullanımda değil)
 
 Site önce lab bilgisayarında Docker + Cloudflare Tunnel ile yayınlanmak üzere
