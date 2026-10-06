@@ -55,13 +55,6 @@ export const communities: Community[] = [
     color: 'var(--c-oyun-gelistirme)',
   },
   {
-    slug: 'blockchain',
-    name: 'Blockchain Topluluğu',
-    shortName: 'BC',
-    tagline: 'Blokzincir teknolojileri, akıllı kontratlar ve merkeziyetsiz uygulamalar üzerine çalışmalar.',
-    color: 'var(--c-blockchain)',
-  },
-  {
     slug: 'siber-guvenlik',
     name: 'Siber Güvenlik Topluluğu',
     shortName: 'SG',

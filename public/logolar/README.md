@@ -10,7 +10,6 @@ Topluluk logolarını bu klasöre koyun. Dosya adı, `src/data/communities.ts` i
 | `app-gelistirme.png`      | App Geliştirme Topluluğu  |
 | `ai.png`                  | AI Topluluğu              |
 | `oyun-gelistirme.png`     | Oyun Geliştirme Topluluğu |
-| `blockchain.png`          | Blockchain Topluluğu      |
 | `siber-guvenlik.png`      | Siber Güvenlik Topluluğu  |
 
 - Tercih sırası: önce `.png`, bulunamazsa `.svg` denenir. `.jpg` desteklenmez — PNG'ye çevirin.

@@ -92,7 +92,7 @@ describe('EventsPage (integration)', () => {
   });
 
   it('etkinliği olmayan topluluk filtresinde boş durum mesajı görünür', () => {
-    const emptySlug = ['fintech', 'blockchain', 'oyun-gelistirme'].find((s) => countFor(s) === 0);
+    const emptySlug = ['fintech', 'oyun-gelistirme'].find((s) => countFor(s) === 0);
     if (!emptySlug) return;
     renderEventsPage(`/etkinlikler?topluluk=${emptySlug}`);
     expect(screen.queryAllByRole('article')).toHaveLength(0);

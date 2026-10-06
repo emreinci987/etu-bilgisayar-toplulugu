@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:80"
 
-  # Cloudflare Tunnel connector — siteyi port açmadan topluluk.emre-inci.com'a yayınlar.
+  # Cloudflare Tunnel connector — siteyi port açmadan etupctopluluk.online'a yayınlar.
   # Token .env dosyasından okunur (bkz. .env.example ve DEPLOYMENT.md).
   # Cloudflare panelindeki Public Hostname servisi: http://web:80
   tunnel:

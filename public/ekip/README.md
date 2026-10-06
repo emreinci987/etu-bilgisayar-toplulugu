@@ -22,7 +22,6 @@ Geçerli slug'lar (`src/data/communities.ts` ile birebir aynı olmalı):
 | `app-gelistirme` | App Geliştirme Topluluğu |
 | `ai` | AI Topluluğu |
 | `oyun-gelistirme` | Oyun Geliştirme Topluluğu |
-| `blockchain` | Blockchain Topluluğu |
 | `siber-guvenlik` | Siber Güvenlik Topluluğu |
 
 Örnek: AI Topluluğu başkanının fotoğrafı → `ai-baskan.jpg`

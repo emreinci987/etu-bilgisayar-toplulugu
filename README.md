@@ -46,10 +46,7 @@ Vite + React 18 + TypeScript + Tailwind CSS + react-router-dom v6 + three.js (va
 
 ## Deployment
 
-Site, lab sunucusunda Docker ile çalışıyor; detaylı kurulum (Docker, subdomain,
-Cloudflare Tunnel / port forwarding, güncelleme ve medya ekleme akışları) için
-[DEPLOYMENT.md](DEPLOYMENT.md) dosyasına bak. Hızlı başlatma:
-
-```bash
-docker compose up -d --build   # http://localhost:8080
-```
+Site Cloudflare Workers üzerinde yayınlanıyor
+([etupctoplulugu.online](https://etupctoplulugu.online)); `main` branch'ine her
+push otomatik build + deploy tetikler. Alan adı kurulumu, güncelleme ve medya
+ekleme akışları için [DEPLOYMENT.md](DEPLOYMENT.md) dosyasına bak.

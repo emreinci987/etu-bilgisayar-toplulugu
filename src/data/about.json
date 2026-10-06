@@ -30,11 +30,6 @@
       "instagram": "https://www.instagram.com/tobb_oyun_kulubu"
     },
     {
-      "slug": "blockchain",
-      "about": "Blockchain Topluluğu, blokzincir teknolojilerine meraklı öğrencileri bir araya getirir. Akıllı kontrat geliştirme, merkeziyetsiz uygulamalar ve Web3 ekosistemi üzerine atölyeler, okuma grupları ve uygulamalı projeler yürütür.",
-      "instagram": "https://www.instagram.com/tobb.blockchain.kulubu"
-    },
-    {
       "slug": "siber-guvenlik",
       "about": "Siber Güvenlik Topluluğu, güvenlik araştırmalarına ve savunma pratiklerine ilgi duyan öğrencileri buluşturur. CTF yarışmaları, sızma testi atölyeleri ve güvenli yazılım geliştirme çalışmalarıyla üyelerin bu alanda deneyim kazanmasını hedefler.",
       "instagram": "https://www.instagram.com/tobbetu_siber_toplulugu"
@@ -73,13 +68,6 @@
       "communitySlug": "oyun-gelistirme",
       "members": [
         { "role": "Başkan", "name": "Nuh Yusuf Sabırer", "title": "" },
-        { "role": "Başkan Yardımcısı", "name": "", "title": "" }
-      ]
-    },
-    {
-      "communitySlug": "blockchain",
-      "members": [
-        { "role": "Başkan", "name": "", "title": "" },
         { "role": "Başkan Yardımcısı", "name": "", "title": "" }
       ]
     },
