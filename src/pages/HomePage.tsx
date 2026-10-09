@@ -48,6 +48,12 @@ export default function HomePage() {
             >
               Etkinlikler
             </Link>
+            <Link
+              to="/oyunlar"
+              className="rounded-card border border-amber px-5 py-3 font-mono text-sm text-amber transition-colors hover:bg-amber hover:text-coal"
+            >
+              Oyna, Sticker Kazan
+            </Link>
             {mainWhatsapp.length > 0 && (
               <a
                 href={mainWhatsapp}

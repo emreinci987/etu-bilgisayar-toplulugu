@@ -20,6 +20,7 @@ describe('Nav (integration)', () => {
       ['Ana Sayfa', '/'],
       ['Etkinlikler', '/etkinlikler'],
       ['Biz Kimiz', '/biz-kimiz'],
+      ['Oyunlar', '/oyunlar'],
     ] as const) {
       const links = screen.getAllByRole('link', { name: label });
       expect(links.length).toBeGreaterThan(0);

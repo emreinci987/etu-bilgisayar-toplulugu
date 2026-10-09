@@ -6,6 +6,9 @@ import Footer from './components/Footer';
 const HomePage = lazy(() => import('./pages/HomePage'));
 const EventsPage = lazy(() => import('./pages/EventsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
+const GamesPage = lazy(() => import('./pages/GamesPage'));
+const FlappyGame = lazy(() => import('./games/FlappyGame'));
+const MemoryGame = lazy(() => import('./games/MemoryGame'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 export default function App() {
@@ -24,6 +27,9 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/etkinlikler" element={<EventsPage />} />
             <Route path="/biz-kimiz" element={<AboutPage />} />
+            <Route path="/oyunlar" element={<GamesPage />} />
+            <Route path="/oyunlar/flappy" element={<FlappyGame />} />
+            <Route path="/oyunlar/hafiza" element={<MemoryGame />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

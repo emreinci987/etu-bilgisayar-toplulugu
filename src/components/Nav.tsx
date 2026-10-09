@@ -6,6 +6,7 @@ const links = [
   { to: '/', label: 'Ana Sayfa' },
   { to: '/etkinlikler', label: 'Etkinlikler' },
   { to: '/biz-kimiz', label: 'Biz Kimiz' },
+  { to: '/oyunlar', label: 'Oyunlar' },
 ];
 
 export default function Nav() {
