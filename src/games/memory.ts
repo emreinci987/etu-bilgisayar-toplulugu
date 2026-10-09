@@ -1,6 +1,9 @@
-/** Kod Hafızası oyununun saf mantığı (UI'dan bağımsız, test edilebilir) */
+import { communities } from '../data/communities';
 
-export const MEMORY_SYMBOLS = ['{ }', '</>', '=>', '&&', '[ ]', '#!', '$_', '!='] as const;
+/** Kulüp Hafızası oyununun saf mantığı (UI'dan bağımsız, test edilebilir) */
+
+/** Kart sembolleri = topluluk slug'ları; ön yüzde /logolar/<slug>.png gösterilir */
+export const MEMORY_SYMBOLS: readonly string[] = communities.map((c) => c.slug);
 
 export const MEMORY_START_SCORE = 100;
 export const MEMORY_MISTAKE_PENALTY = 5;

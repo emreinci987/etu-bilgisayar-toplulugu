@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { getCommunityBySlug } from '../data/communities';
 import { getGame } from './config';
 import GameLayout from './GameLayout';
 import WinOverlay from './WinOverlay';
 import { createDeck, memoryScore, MEMORY_SYMBOLS, type MemoryCard } from './memory';
 
-/** Kod Hafızası — 4×4 kart, aynı kod sembollerini eşleştir */
+/** Kulüp Hafızası — 4×3 kart, aynı kulüp logolarını eşleştir */
 
 const FLIP_BACK_MS = 700;
 
@@ -30,6 +31,11 @@ export default function MemoryGame() {
   }, [startedAt, finishedAt]);
 
   useEffect(() => () => window.clearTimeout(timeout.current), []);
+
+  // Logoları önceden yükle: ilk çevirmede kart boş görünmesin
+  useEffect(() => {
+    for (const slug of MEMORY_SYMBOLS) new Image().src = `/logolar/${slug}.png`;
+  }, []);
 
   function restart() {
     window.clearTimeout(timeout.current);
@@ -98,7 +104,7 @@ export default function MemoryGame() {
                 type="button"
                 onClick={() => flip(i)}
                 disabled={isMatched}
-                aria-label={faceUp ? card.symbol : 'Kapalı kart'}
+                aria-label={faceUp ? (getCommunityBySlug(card.symbol)?.name ?? card.symbol) : 'Kapalı kart'}
                 className={`flex aspect-square w-full items-center justify-center rounded-card border font-mono text-lg font-bold transition-colors sm:text-xl ${
                   isMatched
                     ? 'border-amber/40 bg-amber/10 text-amber'
@@ -107,7 +113,16 @@ export default function MemoryGame() {
                       : 'border-coal-600 bg-coal-800 text-cream-faint active:bg-coal-700'
                 }`}
               >
-                {faceUp ? card.symbol : '?'}
+                {faceUp ? (
+                  <img
+                    src={`/logolar/${card.symbol}.png`}
+                    alt=""
+                    draggable={false}
+                    className={`h-full w-full rounded-card bg-white object-contain p-1.5 ${isMatched ? 'opacity-60' : ''}`}
+                  />
+                ) : (
+                  '?'
+                )}
               </button>
             </li>
           );

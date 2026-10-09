@@ -22,8 +22,8 @@ export const games: GameInfo[] = [
   },
   {
     slug: 'hafiza',
-    title: 'Kod Hafızası',
-    description: 'Kartları çevir, aynı kod sembollerini eşleştir. 100 puanla başlarsın, her yanlış eşleşme −5.',
+    title: 'Kulüp Hafızası',
+    description: 'Kartları çevir, aynı kulüp logolarını eşleştir. 100 puanla başlarsın, her yanlış eşleşme −5.',
     stickerScore: 70,
     goal: '70 puan ve üzeri',
   },
