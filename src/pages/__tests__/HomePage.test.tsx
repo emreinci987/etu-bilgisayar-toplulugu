@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import HomePage from '../HomePage';
 import { communities } from '../../data/communities';
+import about from '../../data/about.json';
 
 // three.js jsdom'da WebGL context üretemez — HeroCanvas'ı mock'la
 vi.mock('../../components/HeroCanvas', () => ({
@@ -43,5 +44,14 @@ describe('HomePage (integration, HeroCanvas mock’lu)', () => {
     expect(screen.getByRole('link', { name: 'Etkinlikler' })).toHaveAttribute('href', '/etkinlikler');
     expect(screen.getByRole('link', { name: /Bizi Tanıyın/ })).toHaveAttribute('href', '/biz-kimiz');
     expect(screen.getByRole('link', { name: /Tüm etkinlikler/ })).toHaveAttribute('href', '/etkinlikler');
+  });
+
+  it('ana WhatsApp/Instagram ve topluluk Instagram linkleri görünür', () => {
+    renderHome();
+    expect(screen.getByRole('link', { name: /WhatsApp Grubu/ })).toHaveAttribute('href', about.socials.whatsapp);
+    for (const c of about.communities) {
+      const name = communities.find((x) => x.slug === c.slug)!.name;
+      expect(screen.getByRole('link', { name: `${name} Instagram` })).toHaveAttribute('href', c.instagram);
+    }
   });
 });

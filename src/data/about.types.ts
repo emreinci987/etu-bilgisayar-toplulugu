@@ -18,6 +18,8 @@ export interface CommunityAbout {
   about: string;
   /** Topluluğun Instagram URL'i; boşsa kartta Instagram butonu gizlenir */
   instagram?: string;
+  /** Topluluğun WhatsApp grup davet URL'i; boşsa ana sayfa kartında WhatsApp linki gizlenir */
+  whatsapp?: string;
 }
 
 export type TeamRole = 'Başkan' | 'Başkan Yardımcısı';

@@ -2,8 +2,16 @@ import { Link } from 'react-router-dom';
 import HeroCanvas from '../components/HeroCanvas';
 import SectionHeading from '../components/SectionHeading';
 import CommunityLogo from '../components/CommunityLogo';
+import { InstagramIcon, WhatsAppIcon } from '../components/SocialIcons';
 import { communities } from '../data/communities';
+import rawAboutData from '../data/about.json';
+import type { AboutData } from '../data/about.types';
 import { useLatestEvents } from '../hooks';
+
+const aboutData = rawAboutData as AboutData;
+const aboutBySlug = new Map(aboutData.communities.map((c) => [c.slug, c]));
+const mainWhatsapp = aboutData.socials.whatsapp.trim();
+const mainInstagram = aboutData.socials.instagram.trim();
 
 export default function HomePage() {
   const latestEvents = useLatestEvents(3);
@@ -40,6 +48,28 @@ export default function HomePage() {
             >
               Etkinlikler
             </Link>
+            {mainWhatsapp.length > 0 && (
+              <a
+                href={mainWhatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-card border border-coal-600 px-5 py-3 font-mono text-sm text-cream-dim transition-colors hover:border-amber hover:text-amber"
+              >
+                <WhatsAppIcon size={18} />
+                WhatsApp Grubu
+              </a>
+            )}
+            {mainInstagram.length > 0 && (
+              <a
+                href={mainInstagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-card border border-coal-600 px-5 py-3 font-mono text-sm text-cream-dim transition-colors hover:border-amber hover:text-amber"
+              >
+                <InstagramIcon size={18} />
+                Instagram
+              </a>
+            )}
           </div>
         </div>
       </section>
@@ -52,23 +82,55 @@ export default function HomePage() {
           description="İlgi alanına göre birini seç ya da hepsine katıl. Her topluluk kendi etkinlik ve projelerini yürütür."
         />
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {communities.map((c) => (
-            <li
-              key={c.slug}
-              className="group rounded-card border border-coal-600 bg-coal-800 p-5 transition-colors hover:border-cream-faint"
-            >
-              <div className="flex items-center gap-4">
-                <CommunityLogo slug={c.slug} shortName={c.shortName} color={c.color} size={52} />
-                <div>
-                  <h3 className="font-mono text-base font-bold text-cream">{c.name}</h3>
-                  <p className="font-mono text-xs" style={{ color: c.color }}>
-                    {c.slug}
-                  </p>
+          {communities.map((c) => {
+            const instagram = aboutBySlug.get(c.slug)?.instagram?.trim() ?? '';
+            const whatsapp = aboutBySlug.get(c.slug)?.whatsapp?.trim() ?? '';
+            return (
+              <li
+                key={c.slug}
+                className="group flex flex-col rounded-card border border-coal-600 bg-coal-800 p-5 transition-colors hover:border-cream-faint"
+              >
+                <div className="flex items-center gap-4">
+                  <CommunityLogo slug={c.slug} shortName={c.shortName} color={c.color} size={52} />
+                  <div>
+                    <h3 className="font-mono text-base font-bold text-cream">{c.name}</h3>
+                    <p className="font-mono text-xs" style={{ color: c.color }}>
+                      {c.slug}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <p className="mt-4 text-sm leading-relaxed text-cream-dim">{c.tagline}</p>
-            </li>
-          ))}
+                <p className="mt-4 text-sm leading-relaxed text-cream-dim">{c.tagline}</p>
+                {(instagram.length > 0 || whatsapp.length > 0) && (
+                  <div className="mt-auto flex flex-wrap gap-2 pt-4">
+                    {instagram.length > 0 && (
+                      <a
+                        href={instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${c.name} Instagram`}
+                        className="inline-flex items-center gap-1.5 rounded-card border border-coal-600 px-3 py-1.5 font-mono text-xs text-cream-dim transition-colors hover:border-amber hover:text-amber"
+                      >
+                        <InstagramIcon size={14} />
+                        Instagram
+                      </a>
+                    )}
+                    {whatsapp.length > 0 && (
+                      <a
+                        href={whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${c.name} WhatsApp`}
+                        className="inline-flex items-center gap-1.5 rounded-card border border-coal-600 px-3 py-1.5 font-mono text-xs text-cream-dim transition-colors hover:border-amber hover:text-amber"
+                      >
+                        <WhatsAppIcon size={14} />
+                        WhatsApp
+                      </a>
+                    )}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </section>
 

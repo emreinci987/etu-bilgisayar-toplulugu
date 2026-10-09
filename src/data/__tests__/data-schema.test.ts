@@ -121,10 +121,13 @@ describe('about.json şeması', () => {
     }
   });
 
-  it('topluluk instagram alanları verilmişse geçerli http(s) URL’dir', () => {
+  it('topluluk instagram/whatsapp alanları verilmişse geçerli http(s) URL’dir', () => {
     for (const c of about.communities) {
-      if (c.instagram !== undefined && c.instagram.trim().length > 0) {
-        expect(c.instagram, `${c.slug}.instagram URL değil`).toMatch(/^https?:\/\//);
+      for (const key of ['instagram', 'whatsapp'] as const) {
+        const url = c[key];
+        if (url !== undefined && url.trim().length > 0) {
+          expect(url, `${c.slug}.${key} URL değil`).toMatch(/^https?:\/\//);
+        }
       }
     }
   });

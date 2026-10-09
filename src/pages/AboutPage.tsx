@@ -1,6 +1,7 @@
 import SectionHeading from '../components/SectionHeading';
 import CommunityAboutCard from '../components/about/CommunityAboutCard';
 import SocialLinksRow from '../components/about/SocialLinksRow';
+import { WhatsAppIcon } from '../components/SocialIcons';
 import TeamCard from '../components/about/TeamCard';
 import { communities } from '../data/communities';
 import rawAboutData from '../data/about.json';
@@ -34,10 +35,7 @@ export default function AboutPage() {
           rel="noopener noreferrer"
           className="mb-16 inline-flex w-full items-center justify-center gap-2 rounded-card bg-amber px-5 py-3 font-mono text-sm font-medium text-coal transition-colors hover:bg-amber-soft sm:w-auto"
         >
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" />
-            <path d="M9.2 8.4c-.3 0-.8.1-.8.7 0 1.4 1.2 3.3 2.6 4.4 1.3 1 2.4 1.3 3.1 1.3.6 0 1-.5 1-1v-.6l-1.8-.7-.8.8c-.9-.5-2.1-1.7-2.6-2.6l.8-.8-.7-1.8-.8.3Z" fill="currentColor" stroke="none" />
-          </svg>
+          <WhatsAppIcon size={18} />
           WhatsApp Grubuna Katıl
         </a>
       )}
